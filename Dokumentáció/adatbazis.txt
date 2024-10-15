@@ -1,0 +1,35 @@
+Relációs Adatbáziskezelő Rendszerek
+A relációs adatbáziskezelő rendszerek (RDBMS) olyan szoftverek, amelyek az adatokat táblázatos formában tárolják, lehetővé téve az adatok közötti komplex kapcsolatok egyszerű kezelését. A relációs modell, amely a matematikai relációkon alapul, biztosítja, hogy az adatok logikusan és strukturáltan legyenek rendezve, ezáltal elősegítve az adatok hatékony keresését, lekérdezését és manipulálását.
+
+Az RDBMS-ek legfontosabb jellemzője, hogy az adatok közötti kapcsolatokra fókuszálnak. Minden adatbázis egy vagy több táblából áll, ahol a táblák sorokból (rekordok) és oszlopokból (attribútumok) épülnek fel. A primér kulcs (egyedi azonosító) garantálja, hogy minden rekord egyedi legyen, míg az idegen kulcsok lehetővé teszik a táblák közötti kapcsolatok definiálását. Ezen kapcsolatok révén az RDBMS-ek lehetővé teszik az adatok integritásának fenntartását és a redundancia minimalizálását.
+
+Az RDBMS-ek legfontosabb jellemzői közé tartozik a tranzakciókezelés, amely biztosítja az adatok konzisztenciáját. A tranzakciók atomitása, konzisztenciája, izolációja és tartóssága (ACID elvek) biztosítják, hogy egy műveletsorozat vagy teljes mértékben végrehajtódik, vagy egyáltalán nem, ezzel megelőzve az adatvesztést és a sérüléseket.
+
+A legnépszerűbb relációs adatbáziskezelő rendszerek közé tartozik az Oracle, a Microsoft SQL Server, a PostgreSQL és a MySQL. Ezek a rendszerek széles körben használatosak különböző iparágakban, például a pénzügyi szolgáltatásokban, a kereskedelemben, az egészségügyben és a telekommunikációban. Az RDBMS-ek lehetővé teszik az adatok könnyű keresését és feldolgozását, így alapvető fontosságúak az üzleti intelligencia és az adatelemzés területén.
+
+MySQL/MariaDB és PHPMyAdmin
+A MySQL és a MariaDB a legelterjedtebb nyílt forráskódú relációs adatbáziskezelő rendszerek közé tartoznak. A MySQL, amelyet 1995-ben alapítottak, gyorsan népszerűvé vált a webes alkalmazások körében. 2010-ben, amikor a Sun Microsystems-t az Oracle Corporation megvásárolta, felmerültek aggályok a MySQL jövőjével kapcsolatban, így a MariaDB fejlesztése indult el, amely célja a MySQL funkcióinak és teljesítményének megőrzése és továbbfejlesztése.
+
+A MySQL és a MariaDB közötti fő különbség az, hogy a MariaDB közösségi orientált, és folyamatosan új funkciókat és teljesítményjavításokat kínál. Mindkét rendszer nagy népszerűségnek örvend, mivel könnyen telepíthető, rugalmas, és nagy teljesítményt nyújt.
+
+A MySQL és a MariaDB számos jellemzőt kínál, például:
+
+1.Teljesítmény: Képesek nagy mennyiségű adat kezelésére és gyors lekérdezések végrehajtására.
+2.Skálázhatóság: Könnyen bővíthetők, ami lehetővé teszi a nagy rendszerek kialakítását.
+3.Biztonság: Támogatják a felhasználói jogosultságok és szerepkörök kezelését, így biztosítva, hogy csak a megfelelő felhasználók férhessenek hozzá az adatokhoz.
+4.Tranzakciókezelés: Az ACID elveknek köszönhetően biztosítják az adatok integritását.
+
+A PHPMyAdmin egy rendkívül népszerű webalapú alkalmazás, amely a MySQL és a MariaDB adatbázisok kezelésére szolgál. Az alkalmazás célja, hogy megkönnyítse a felhasználók számára az adatbázisokkal végzett műveletek elvégzését, anélkül hogy mélyebb technikai ismeretekre lenne szükség. Az intuitív felhasználói felület lehetővé teszi az adatok egyszerű kezelését, beleértve a táblák létrehozását, módosítását, törlését és lekérdezését.
+
+A PHPMyAdmin főbb jellemzői a következők:
+
+1.Grafikus felhasználói felület: Könnyen navigálható, lehetővé téve a felhasználók számára, hogy intuitív módon végezzenek műveleteket.
+2.SQL lekérdezések végrehajtása: A felhasználók közvetlenül írhatnak és futtathatnak SQL lekérdezéseket, és megtekinthetik az eredményeket.
+3.Adatbázisok importálása és exportálása: A PHPMyAdmin támogatja a különböző formátumokban történő adatimportálást és -exportálást, ami megkönnyíti az adatok mozgatását.
+4.Felhasználói jogosultságok kezelése: A rendszergazdák képesek beállítani, hogy ki férhet hozzá az egyes adatbázisokhoz, ezzel biztosítva a biztonságot.
+5.Adatok vizualizációja: A PHPMyAdmin grafikus ábrázolásokat kínál, amelyek segítségével a felhasználók könnyen megérthetik az adatok közötti kapcsolatokat.
+
+A MySQL/MariaDB és a PHPMyAdmin kombinációja lehetővé teszi a fejlesztők és az adatkezelők számára, hogy hatékonyan kezeljék az adatbázisokat, és gyorsan reagáljanak az üzleti igényekre. A nyílt forráskódú természetük, a közösségi támogatás és a folyamatos fejlesztések miatt a MySQL és a MariaDB kiváló választás a modern adatbázis-kezelési igényekhez. Az ilyen rendszerek használata nemcsak a hatékonyságot növeli, hanem lehetővé teszi a felhasználók számára, hogy a legfrissebb technológiákat kihasználva fejlesszék alkalmazásaikat. Ezért döntötünk úgy , hogy ezeket használjuk a programunkhoz.
+
+
+

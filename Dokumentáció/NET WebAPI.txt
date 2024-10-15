@@ -1,0 +1,13 @@
+A .NET Web API a Microsoft által fejlesztett keretrendszer, mely lehetővé teszi HTTP-alapú szolgáltatások létrehozását RESTful elvek mentén. Az alkalmazások fejlesztéséhez az ASP.NET Core Web API-t használják, amely a .NET Core platform része. Ez a technológia skálázható, jól tesztelhető és platformfüggetlen megoldást kínál API-k létrehozására.
+
+Főbb jellemzői:
+
+Egyszerűség: Kódolás közben kevés boilerplate kódra van szükség, így a fejlesztők gyorsan hozhatnak létre API-kat.
+
+Integráció: Kiválóan integrálható különböző .NET alapú alkalmazásokkal és más platformokkal is.
+
+Skálázhatóság: Alkalmas nagy volumenű, elosztott rendszerek kiszolgálására.
+
+Biztonság: Erős támogatást nyújt különböző hitelesítési és jogosultsági rendszerekhez.
+
+Az ASP.NET Core Web API lehetővé teszi a fejlesztők számára, hogy gyorsan és hatékonyan készítsenek webszolgáltatásokat, melyek könnyen karbantarthatók és bővíthetők. Az ilyen API-k segítségével különböző kliensek, például webes és mobil alkalmazások könnyedén hozzáférhetnek az adatokhoz és funkciókhoz.
