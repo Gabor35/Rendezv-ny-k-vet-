@@ -70,7 +70,7 @@ namespace esemenyrendezo
             {
                 options.AddDefaultPolicy(builder =>
                 {
-                    builder.WithOrigins("http://127.0.0.1:3000") // Add frontend URL
+                    builder.AllowAnyOrigin() // itt hibás volt az 5000-es frontend? port engedélyezése
                            .AllowAnyHeader()
                            .AllowAnyMethod();
                 });
