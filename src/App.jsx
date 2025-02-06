@@ -4,6 +4,7 @@ import { Login } from './Login';
 import { Register } from './Register';
 import { ForgotPassword } from './ForgotPassword';
 import { AddEvent } from './AddEvent';
+import { EventList } from './EventList';
 import logo from './logo.jpg';
 
 export const App = () => {
@@ -47,10 +48,12 @@ export const App = () => {
       <div className="container mt-4">
         <h2 className="text-center mb-4">Események</h2>
         <Routes>
+          <Route path="/" element={<EventList />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/add-event" element={<AddEvent />} />
+          <Route path="*" element={<Login />} />
         </Routes>
       </div>
     </Router>
