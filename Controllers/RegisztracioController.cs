@@ -33,9 +33,9 @@ namespace esemenyrendezo.Controllers
                     felhasznalo.Hash=Program.CreateSHA256(felhasznalo.Hash);
                     await cx.Felhasznalos.AddAsync(felhasznalo);
                     await cx.SaveChangesAsync();
-                    Program.SendEmail(felhasznalo.Email, "Regisztració", $"http://localhost:5000/api/Regisztracio?felhasznaloNev={felhasznalo.FelhasznaloNev}&email={felhasznalo.Email}");
+                    Program.SendEmail(felhasznalo.Email, "Regisztració", $"http://localhost:5106/api/Regisztracio?felhasznaloNev={felhasznalo.FelhasznaloNev}&email={felhasznalo.Email}");
 
-                    return Ok("Sikeres regisztráció. Fejezebe a regiszttrációját az e-,ail címére küldött link segítségével!");
+                    return Ok("Sikeres regisztráció. Fejezebe a regiszttrációját az e-mail címére küldött link segítségével!");
                 }
                 catch (Exception ex)
                 {
