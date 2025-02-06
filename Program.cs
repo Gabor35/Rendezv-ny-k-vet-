@@ -70,7 +70,7 @@ namespace esemenyrendezo
             {
                 options.AddDefaultPolicy(builder =>
                 {
-                    builder.WithOrigins("http://127.0.0.1:5500") // Add frontend URL
+                    builder.WithOrigins("http://127.0.0.1:3000") // Add frontend URL
                            .AllowAnyHeader()
                            .AllowAnyMethod();
                 });
