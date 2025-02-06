@@ -1,31 +1,51 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, NavLink, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
 import { Login } from './Login';
 import { Register } from './Register';
 import { ForgotPassword } from './ForgotPassword';
 import { AddEvent } from './AddEvent';
 import logo from './logo.jpg';
 
-export const App = ()=> {
+export const App = () => {
   return (
     <Router>
-      <div>
-        <header className="d-flex justify-content-between align-items-center p-3 bg-light">
-          <div className="d-flex align-items-center">
+      <nav className="navbar navbar-expand-sm navbar-light bg-light">
+        <div className="container-fluid">
+          <div className="navbar-brand">
             <img src={logo} alt="Logo" className="me-2" style={{ width: '50px', height: '50px' }} />
-            <h1 className="h4 mb-0 ms-3">Eseményrendező</h1>
-          </div>
-          <div>
-            <NavLink to="/login" className="btn btn-light me-2">Bejelentkezés</NavLink>
-            <NavLink to="/register" className="btn btn-light">Regisztráció</NavLink>
-          </div>
-        </header>
 
-        <div className="container mt-4">
-          <h2 className="text-center mb-4">Események</h2>
-          <Link to="/add-event" className="btn btn-light">Új Esemény Hozzáadása</Link>
+          </div>
+          <button className="navbar-toggler" type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse justify-content-between" id="navbarNav">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <NavLink to="/" className={({ isActive }) => "nav-link" + (isActive ? " active" : "")}>Eseményrendező</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/add-event" className={({ isActive }) => "nav-link" + (isActive ? " active" : "")}>Új Esemény Hozzáadása</NavLink>
+              </li>
+            </ul>
+            <ul className="navbar-nav ms-auto">
+              <li className="nav-item">
+                <NavLink to="/login" className={({ isActive }) => "nav-link" + (isActive ? " active" : "")}><span className="btn btn-light">Bejelentkezés</span></NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/register" className={({ isActive }) => "nav-link" + (isActive ? " active" : "")}><span className="btn btn-light">Regisztráció</span></NavLink>
+              </li>
+            </ul>
+          </div>
         </div>
+      </nav>
 
+      <div className="container mt-4">
+        <h2 className="text-center mb-4">Események</h2>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
