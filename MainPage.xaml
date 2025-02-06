@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="esemenyrendezo.MainPage"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid>
+        <!-- Grid: Fő tartalom + Alsó gombsáv -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <!-- Tartalom kitölti a helyet -->
+            <RowDefinition Height="Auto" />
+            <!-- Alsó navigáció rögzítve marad -->
+        </Grid.RowDefinitions>
+
+        <!-- Görgethető tartalom -->
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="2" Spacing="4">
+
+                <!-- Header -->
+                <HorizontalStackLayout>
+                    <Frame WidthRequest="40" HeightRequest="40" CornerRadius="30" Padding="0" IsClippedToBounds="True" Margin="7,1,0,0">
+                        <Image Source="logo.jpg"
+                               HeightRequest="40"
+                               WidthRequest="40"
+                               SemanticProperties.Description="Esemenyrendezo"/>
+                    </Frame>
+                    <Label Text="Eseményrendező"
+                           FontSize="20"
+                           SemanticProperties.HeadingLevel="Level1"
+                           VerticalOptions="Center"
+                           Margin="70,5,0,0"/>
+                </HorizontalStackLayout>
+                
+                <BoxView HeightRequest="2"
+                         HorizontalOptions="Fill"
+                         Color="White" />
+
+                <!-- Nagy kártya -->
+                <HorizontalStackLayout Margin="10,0,0,0">
+                    <Frame CornerRadius="10"
+                           Padding="10"
+                           WidthRequest="300"
+                           HeightRequest="300"
+                           Margin="3"
+                           BackgroundColor="LightGray">
+                        <Image Source="logo.jpg"
+                               HeightRequest="250"
+                               SemanticProperties.Description="Esemenyrendezo"/>
+                    </Frame>
+
+                    <BoxView WidthRequest="2"
+                             HeightRequest="305"
+                             Margin="35,0,0,0"
+                             VerticalOptions="Fill"
+                             HorizontalOptions="Center"
+                             Color="White"/>
+
+                    <Grid>
+                        <!-- 1. Gomb -->
+                        <Button ImageSource="logo.jpg"
+                                Padding="7"
+                                Margin="1,0,0,250"
+                                HeightRequest="50"
+                                WidthRequest="50"
+                                BackgroundColor="Transparent"/>
+
+                        <!-- 2. Gomb -->
+                        <Button ImageSource="logo.jpg"
+                                Padding="7"
+                                Margin="1,0,0,150"
+                                HeightRequest="50"
+                                WidthRequest="50"
+                                BackgroundColor="Transparent"/>
+
+                        <!-- 3. Gomb -->
+                        <Button ImageSource="logo.jpg"
+                                Padding="7"
+                                Margin="1,0,0,40"
+                                HeightRequest="50"
+                                WidthRequest="50"
+                                BackgroundColor="Transparent"/>
+
+                        <!-- 4. Gomb -->
+                        <Button ImageSource="logo.jpg"
+                                Padding="7"
+                                Margin="1,65,0,0"
+                                HeightRequest="50"
+                                WidthRequest="50"
+                                BackgroundColor="Transparent"/>
+
+                        <!-- 5. Gomb -->
+                        <Button ImageSource="logo.jpg"
+                                Padding="7"
+                                Margin="1,170,0,0"
+                                HeightRequest="50"
+                                WidthRequest="50"
+                                BackgroundColor="Transparent"/>
+
+                        <!-- 6. Gomb -->
+                        <Button ImageSource="threedots.jpg"
+                                Padding="7"
+                                
+                                Margin="1,260,0,0"
+                                HeightRequest="40"
+                                WidthRequest="40"
+                                BackgroundColor="LightGray"/>
+                    </Grid>
+                </HorizontalStackLayout>
+
+                <BoxView HeightRequest="2"
+                         HorizontalOptions="Fill"
+                         Color="White"/>
+
+                <!-- Kisebb kártyák -->
+                <HorizontalStackLayout Margin="20,0,0,0">
+                    <Frame CornerRadius="10"
+                           Padding="10"
+                           Margin="10"
+                           BackgroundColor="LightGray">
+                        <VerticalStackLayout HorizontalOptions="Center">
+                            <Image Source="logo.jpg"
+                                   HeightRequest="117"
+                                   SemanticProperties.Description="Esemenyrendezo"
+                                   Margin="0,0,0,10"/>
+                            <Label Text="Ez egy példa szöveg"
+                                   FontSize="14"
+                                   TextColor="Black"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Frame CornerRadius="10"
+                           Padding="10"
+                           Margin="10"
+                           BackgroundColor="LightGray">
+                        <VerticalStackLayout HorizontalOptions="Center">
+                            <Image Source="logo.jpg"
+                                   HeightRequest="117"
+                                   SemanticProperties.Description="Esemenyrendezo"
+                                   Margin="0,0,0,10"/>
+                            <Label Text="Ez egy példa szöveg"
+                                   FontSize="14"
+                                   TextColor="Black"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Margin="20,0,0,0">
+                    <Frame CornerRadius="10"
+                           Padding="10"
+                           Margin="10"
+                           BackgroundColor="LightGray">
+                        <VerticalStackLayout HorizontalOptions="Center">
+                            <Image Source="logo.jpg"
+                                   HeightRequest="117"
+                                   SemanticProperties.Description="Esemenyrendezo"
+                                   Margin="0,0,0,10"/>
+                            <Label Text="Ez egy példa szöveg"
+                                   FontSize="14"
+                                   TextColor="Black"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Frame CornerRadius="10"
+                           Padding="10"
+                           Margin="10"
+                           BackgroundColor="LightGray">
+                        <VerticalStackLayout HorizontalOptions="Center">
+                            <Image Source="logo.jpg"
+                                   HeightRequest="117"
+                                   SemanticProperties.Description="Esemenyrendezo"
+                                   Margin="0,0,0,10"/>
+                            <Label Text="Ez egy példa szöveg"
+                                   FontSize="14"
+                                   TextColor="Black"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Rögzített alsó gombsor -->
+        <HorizontalStackLayout Grid.Row="1"
+                               VerticalOptions="End"
+                               BackgroundColor="LightGray"
+                               Padding="1">
+            <!-- 1. Gomb -->
+            <Button ImageSource="chat.svg"
+                    Margin="22,0,0,0"
+                    BackgroundColor="Transparent"/>
+
+            <!-- 2. Gomb -->
+            <Button ImageSource="floppy.svg"
+                    Margin="37,0,0,0"
+                    BackgroundColor="Transparent"/>
+
+            <!-- 3. Gomb -->
+            <Button ImageSource="house.svg"
+                    Margin="37,0,0,0"
+                    BackgroundColor="Transparent"/>
+
+            <!-- 4. Gomb -->
+            <Button ImageSource="calendar.svg"
+                    Margin="37,0,0,0"
+                    BackgroundColor="Transparent"/>
+
+            <!-- 5. Gomb -->
+            <Button ImageSource="threedots.svg"
+                    Margin="37,0,0,0"
+                    BackgroundColor="Transparent"/>
+        </HorizontalStackLayout>
+
+    </Grid>
+</ContentPage>
