@@ -7,7 +7,7 @@ import { AddEvent } from './AddEvent';
 import { EventList } from './EventList';
 import logo from './logo.jpg';
 
-//kommentek
+//komment
 export const App = () => {
   return (
     <Router>
