@@ -5,7 +5,7 @@ import { Register } from './Register';
 import { ForgotPassword } from './ForgotPassword';
 import { AddEvent } from './AddEvent';
 import { EventList } from './EventList';
-import logo from './logo.jpg';
+import logo from './logo2.jpg';
 
 //asda
 export const App = () => {
