@@ -11,7 +11,7 @@ export const Login = () => {
   const handleLogout = async () => {
     if (user?.token) {
       try {
-        const logoutUrl = `http://localhost:5106/api/Logout/${user.token}`;
+        const logoutUrl = `http://localhost:5000/api/Logout/${user.token}`;
         const response = await axios.post(logoutUrl);
         console.log(response.data);
         alert("Kijelentkezés sikeres!");
@@ -28,11 +28,11 @@ export const Login = () => {
   };
   const handleLogin = async () => {
     try {
-      const saltResponse = await axios.post(`http://localhost:5106/api/Login/GetSalt/${loginName}`);
+      const saltResponse = await axios.post(`http://localhost:5000/api/Login/GetSalt/${loginName}`);
       const salt = saltResponse.data;
       const tmpHash = sha256(password + salt.toString());
 
-      const loginResponse = await axios.post("http://localhost:5106/api/Login", {
+      const loginResponse = await axios.post("http://localhost:5000/api/Login", {
         loginName,
         tmpHash,
       });
