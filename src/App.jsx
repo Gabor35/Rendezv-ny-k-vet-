@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
-import { Login } from './Login';
+import { Login } from './Login'; 
 import { Register } from './Register';
 import { ForgotPassword } from './ForgotPassword';
 import { AddEvent } from './AddEvent';
 import { EventList } from './EventList';
 import logo from './logo.jpg';
 
-//a 
+//asda
 export const App = () => {
   return (
     <Router>
