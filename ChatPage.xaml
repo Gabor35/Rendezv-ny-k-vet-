@@ -1,0 +1,47 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="esemenyrendezo.ChatPage"
+             Title="Chat">
+
+    <StackLayout Padding="10">
+        <!-- ListView az üzenetek megjelenítésére -->
+        <ListView x:Name="ChatList"
+                  HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame Padding="5"
+                               Margin="5"
+                               BackgroundColor="LightGray">
+                            <Label Text="{Binding Message}" TextColor="Black" />
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- Beviteli mező és Küldés gomb -->
+        <StackLayout Orientation="Horizontal" Margin="0,0,0,50" Padding="10">
+            <Entry x:Name="MessageEntry"
+                   Placeholder="Írj egy üzenetet..."
+                   HorizontalOptions="FillAndExpand"/>
+            <Button ImageSource="sendarrow.svg" Margin="6.5,0,0,0"
+                    Clicked="OnSendMessage"/>
+        </StackLayout>
+
+        <!-- Gombok: Kilépés és Vissza -->
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+            
+            <!-- Vissza gomb -->
+            <Button Text="Vissza"
+        Clicked="OnBackButtonClicked"
+        HorizontalOptions="Center"
+                    Margin="0,0,30,0"/>
+            <!-- Kilépés gomb -->
+            <Button Text="Kilépés"
+                    Clicked="OnExitButtonClicked"
+                    HorizontalOptions="Center"/>
+        </StackLayout>
+    </StackLayout>
+
+</ContentPage>

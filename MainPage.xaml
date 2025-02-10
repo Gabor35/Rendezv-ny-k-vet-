@@ -192,27 +192,32 @@
             <!-- 1. Gomb -->
             <Button ImageSource="chat.svg"
                     Margin="22,0,0,0"
-                    BackgroundColor="Transparent"/>
+                    BackgroundColor="Transparent"
+                    Clicked="OnChatButtonClicked"/>
 
             <!-- 2. Gomb -->
             <Button ImageSource="floppy.svg"
                     Margin="37,0,0,0"
-                    BackgroundColor="Transparent"/>
+                    BackgroundColor="Transparent"
+                    Clicked="OnFloppyButtonClicked"/>
 
             <!-- 3. Gomb -->
             <Button ImageSource="house.svg"
                     Margin="37,0,0,0"
-                    BackgroundColor="Transparent"/>
+                    BackgroundColor="Transparent"
+                    Clicked="OnHomeButtonClicked"/>
 
             <!-- 4. Gomb -->
             <Button ImageSource="calendar.svg"
                     Margin="37,0,0,0"
-                    BackgroundColor="Transparent"/>
+                    BackgroundColor="Transparent"
+                    Clicked="OnCalendarButtonClicked"/>
 
             <!-- 5. Gomb -->
             <Button ImageSource="threedots.svg"
                     Margin="37,0,0,0"
-                    BackgroundColor="Transparent"/>
+                    BackgroundColor="Transparent"
+                    Clicked="OnSettingsButtonClicked"/>
         </HorizontalStackLayout>
 
     </Grid>
