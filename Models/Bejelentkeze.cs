@@ -5,7 +5,7 @@ namespace esemenyrendezo.Models;
 
 public partial class Bejelentkeze
 {
-    public int Id { get; set; }
+    public int BejelentkezesId { get; set; }
 
     public int FelhasznaloId { get; set; }
 
@@ -14,6 +14,4 @@ public partial class Bejelentkeze
     public string? Ipaddress { get; set; }
 
     public bool Sikeres { get; set; }
-
-    public virtual Felhasznalo Felhasznalo { get; set; } = null!;
 }

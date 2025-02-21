@@ -1,59 +1,29 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using esemenyrendezo.DTOs;
+using esemenyrendezo.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using esemenyrendezo.Models;
-using esemenyrendezo.DTOs;
 using Microsoft.EntityFrameworkCore;
-using esemenyrendezo.DTOs;
-using esemenyrendezo;
-using esemenyrendezo.Models;
 
-namespace ProjektNeveBackend.Controllers
+namespace esemenyrendezo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class EsemenyController : ControllerBase
     {
-        [HttpGet("UserEmailName/{token}")]
 
-        public async Task<IActionResult> GetUserEmailName(string token)
+
+
+        [HttpGet]
+
+        public async Task<IActionResult> Get()
         {
             using (var cx = new EsemenyrendezoContext())
             {
                 try
                 {
-                    if (Program.LoggedInUsers.ContainsKey(token) && Program.LoggedInUsers[token].Jogosultsag == 9)
-                    {
-                        return Ok(await cx.Felhasznalos.Select(f => (new UserEmailNameDTO { Email = f.Email, TeljesNev = f.TeljesNev })).ToListAsync());
-                    }
-                    else
-                    {
-                        return BadRequest("Nincs jogod hozzá!");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    //return BadRequest(ex.Message);
-                    return BadRequest(ex.InnerException?.Message);
-                }
-            }
-        }
 
-        [HttpGet("{token}")]
+                    return Ok(cx.Esemenies.ToList());
 
-        public async Task<IActionResult> Get(string token)
-        {
-            using (var cx = new EsemenyrendezoContext())
-            {
-                try
-                {
-                    if (Program.LoggedInUsers.ContainsKey(token) && Program.LoggedInUsers[token].Jogosultsag == 9)
-                    {
-                        return Ok(await cx.Felhasznalos.ToListAsync());
-                    }
-                    else
-                    {
-                        return BadRequest("Nincs jogod hozzá!");
-                    }
                 }
                 catch (Exception ex)
                 {
@@ -65,7 +35,7 @@ namespace ProjektNeveBackend.Controllers
 
         [HttpPost("{token}")]
 
-        public async Task<IActionResult> Post(string token, Felhasznalo felhasznalo)
+        public async Task<IActionResult> Post(string token, Esemeny esemeny)
         {
             using (var cx = new EsemenyrendezoContext())
             {
@@ -73,9 +43,9 @@ namespace ProjektNeveBackend.Controllers
                 {
                     if (Program.LoggedInUsers.ContainsKey(token) && Program.LoggedInUsers[token].Jogosultsag == 9)
                     {
-                        await cx.Felhasznalos.AddAsync(felhasznalo);
+                        await cx.Esemenies.AddAsync(esemeny);
                         await cx.SaveChangesAsync();
-                        return Ok("Új felhasználó felvéve.");
+                        return Ok("Új esemény felvéve.");
                     }
                     else
                     {
@@ -92,7 +62,7 @@ namespace ProjektNeveBackend.Controllers
 
         [HttpPut("{token}")]
 
-        public IActionResult Put(string token, Felhasznalo felhasznalo)
+        public IActionResult Put(string token, Esemeny esemeny)
         {
             using (var cx = new EsemenyrendezoContext())
             {
@@ -100,9 +70,9 @@ namespace ProjektNeveBackend.Controllers
                 {
                     if (Program.LoggedInUsers.ContainsKey(token) && Program.LoggedInUsers[token].Jogosultsag == 9)
                     {
-                        cx.Felhasznalos.Update(felhasznalo);
+                        cx.Esemenies.Update(esemeny);
                         cx.SaveChanges();
-                        return Ok("A felhasználó adatai módosítva.");
+                        return Ok("Az esemény adatai módosítva.");
                     }
                     else
                     {
@@ -127,9 +97,9 @@ namespace ProjektNeveBackend.Controllers
                 {
                     if (Program.LoggedInUsers.ContainsKey(token) && Program.LoggedInUsers[token].Jogosultsag == 9)
                     {
-                        cx.Felhasznalos.Remove(new Felhasznalo { Id = id });
+                        cx.Esemenies.Remove(new Esemeny { Id = id });
                         cx.SaveChanges();
-                        return Ok("A felhasználó adatai törölve.");
+                        return Ok("Az Esemény adatai törölve.");
                     }
                     else
                     {
@@ -145,6 +115,3 @@ namespace ProjektNeveBackend.Controllers
         }
     }
 }
-
-
-

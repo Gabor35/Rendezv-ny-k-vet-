@@ -25,9 +25,5 @@ public partial class Felhasznalo
 
     public string FenykepUtvonal { get; set; } = null!;
 
-    public virtual ICollection<Bejelentkeze> Bejelentkezes { get; set; } = new List<Bejelentkeze>();
-
-    public virtual ICollection<Kijelentkeze> Kijelentkezes { get; set; } = new List<Kijelentkeze>();
-
     public virtual ICollection<Reszvetel> Reszvetels { get; set; } = new List<Reszvetel>();
 }

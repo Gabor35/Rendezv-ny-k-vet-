@@ -115,8 +115,9 @@ namespace esemenyrendezo
         }
     }
 }
-//Scaffold-DbContext "SERVER=localhost;PORT=3306;DATABASE=esemenyrendezo;USER=root;PASSWORD=;SSL MODE=none;" mysql.entityframeworkcore -outputdir Models -f
 
+//Scaffold-DbContext "SERVER=localhost;PORT=3306;DATABASE=esemenyrendezo;USER=root;PASSWORD=;SSL MODE=none;" mysql.entityframeworkcore -outputdir Models -f
+//
 /*Felhasznalo body
  {
   "id": 0,

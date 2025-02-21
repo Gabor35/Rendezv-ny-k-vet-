@@ -15,5 +15,7 @@ public partial class Esemeny
 
     public string? Leiras { get; set; }
 
+    public string Kepurl { get; set; } = null!;
+
     public virtual ICollection<Reszvetel> Reszvetels { get; set; } = new List<Reszvetel>();
 }

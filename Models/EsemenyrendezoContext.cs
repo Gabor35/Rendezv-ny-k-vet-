@@ -17,11 +17,11 @@ public partial class EsemenyrendezoContext : DbContext
 
     public virtual DbSet<Bejelentkeze> Bejelentkezes { get; set; }
 
+    public virtual DbSet<ChatMessage> ChatMessages { get; set; }
+
     public virtual DbSet<Esemeny> Esemenies { get; set; }
 
     public virtual DbSet<Felhasznalo> Felhasznalos { get; set; }
-
-    public virtual DbSet<Kijelentkeze> Kijelentkezes { get; set; }
 
     public virtual DbSet<Reszvetel> Reszvetels { get; set; }
 
@@ -33,16 +33,16 @@ public partial class EsemenyrendezoContext : DbContext
     {
         modelBuilder.Entity<Bejelentkeze>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
+            entity
+                .HasNoKey()
+                .ToTable("bejelentkezes");
 
-            entity.ToTable("bejelentkezes");
-
-            entity.HasIndex(e => e.FelhasznaloId, "FelhasznaloID");
-
-            entity.Property(e => e.Id).HasColumnType("int(11)");
             entity.Property(e => e.BejelentkezesDatuma)
                 .HasDefaultValueSql("'current_timestamp()'")
                 .HasColumnType("datetime");
+            entity.Property(e => e.BejelentkezesId)
+                .HasColumnType("int(11)")
+                .HasColumnName("BejelentkezesID");
             entity.Property(e => e.FelhasznaloId)
                 .HasColumnType("int(11)")
                 .HasColumnName("FelhasznaloID");
@@ -50,11 +50,27 @@ public partial class EsemenyrendezoContext : DbContext
                 .HasMaxLength(45)
                 .HasDefaultValueSql("'NULL'")
                 .HasColumnName("IPAddress");
+        });
 
-            entity.HasOne(d => d.Felhasznalo).WithMany(p => p.Bejelentkezes)
-                .HasForeignKey(d => d.FelhasznaloId)
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("bejelentkezes_ibfk_1");
+        modelBuilder.Entity<ChatMessage>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("chat_messages");
+
+            entity.Property(e => e.Id)
+                .HasColumnType("int(11)")
+                .HasColumnName("id");
+            entity.Property(e => e.Text)
+                .HasColumnType("text")
+                .HasColumnName("text");
+            entity.Property(e => e.Time)
+                .HasDefaultValueSql("'current_timestamp()'")
+                .HasColumnType("timestamp")
+                .HasColumnName("time");
+            entity.Property(e => e.User)
+                .HasMaxLength(30)
+                .HasColumnName("user");
         });
 
         modelBuilder.Entity<Esemeny>(entity =>
@@ -67,6 +83,7 @@ public partial class EsemenyrendezoContext : DbContext
             entity.Property(e => e.Cime).HasMaxLength(255);
             entity.Property(e => e.Datum).HasColumnType("datetime");
             entity.Property(e => e.Helyszin).HasMaxLength(255);
+            entity.Property(e => e.Kepurl).HasMaxLength(64);
             entity.Property(e => e.Leiras)
                 .HasDefaultValueSql("'NULL'")
                 .HasColumnType("text");
@@ -98,30 +115,6 @@ public partial class EsemenyrendezoContext : DbContext
                 .HasMaxLength(64)
                 .HasColumnName("SALT");
             entity.Property(e => e.TeljesNev).HasMaxLength(60);
-        });
-
-        modelBuilder.Entity<Kijelentkeze>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.ToTable("kijelentkezes");
-
-            entity.HasIndex(e => e.FelhasznaloId, "FelhasznaloID");
-
-            entity.Property(e => e.Id).HasColumnType("int(11)");
-            entity.Property(e => e.FelhasznaloId).HasColumnType("int(11)");
-            entity.Property(e => e.Ipaddress)
-                .HasMaxLength(45)
-                .HasDefaultValueSql("'NULL'")
-                .HasColumnName("IPAddress");
-            entity.Property(e => e.KijelentkezesDatuma)
-                .HasDefaultValueSql("'current_timestamp()'")
-                .HasColumnType("datetime");
-
-            entity.HasOne(d => d.Felhasznalo).WithMany(p => p.Kijelentkezes)
-                .HasForeignKey(d => d.FelhasznaloId)
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("kijelentkezes_ibfk_1");
         });
 
         modelBuilder.Entity<Reszvetel>(entity =>
