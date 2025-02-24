@@ -1,166 +1,144 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react'; // Itt importáljuk a useState-et 
+import { Modal, Button } from 'react-bootstrap';
 
-export const EventList = () => {
-    const [events] = useState([
-        {
-          EsemenyID: 1,
-          Cime: "Koncert a parkban",
-          Helyszin: "Budapest, Városliget",
-          Datum: "2025-03-15T18:00:00",
-          Leiras: "Egy fantasztikus szabadtéri koncert a legjobb zenekarokkal.",
-        },
-        {
-          EsemenyID: 2,
-          Cime: "Gasztrofesztivál",
-          Helyszin: "Debrecen, Fő tér",
-          Datum: "2025-04-10T12:00:00",
-          Leiras: "Kóstold meg Magyarország legjobb ételeit és italait!",
-        },
-        {
-          EsemenyID: 3,
-          Cime: "Tech Meetup",
-          Helyszin: "Szeged, Innovációs Központ",
-          Datum: "2025-05-05T17:30:00",
-          Leiras: "Találkozz más fejlesztőkkel és ismerd meg a legújabb technológiákat!",
-        },
-        {
-          EsemenyID: 4,
-          Cime: "Startup Konferencia",
-          Helyszin: "Győr, Egyetemi Campus",
-          Datum: "2025-06-20T09:00:00",
-          Leiras: "Inspiráló előadások sikeres startup alapítóktól.",
-        },
-        {
-          EsemenyID: 5,
-          Cime: "Művészeti kiállítás",
-          Helyszin: "Pécs, Művészetek Háza",
-          Datum: "2025-07-08T15:00:00",
-          Leiras: "Modern és klasszikus művészeti alkotások egy helyen.",
-        },
-        {
-          EsemenyID: 6,
-          Cime: "Sportnap",
-          Helyszin: "Miskolc, Városi Stadion",
-          Datum: "2025-08-12T10:00:00",
-          Leiras: "Próbáld ki a legkülönbözőbb sportokat egy egész napos eseményen.",
-        },
-        {
-          EsemenyID: 7,
-          Cime: "Filmfesztivál",
-          Helyszin: "Sopron, Mozi Kert",
-          Datum: "2025-09-18T19:00:00",
-          Leiras: "Premier előtti vetítések és közönségtalálkozók híres rendezőkkel.",
-        },
-        {
-          EsemenyID: 8,
-          Cime: "Könyvbemutató",
-          Helyszin: "Eger, Városi Könyvtár",
-          Datum: "2025-10-03T16:00:00",
-          Leiras: "Beszélgetés az íróval és dedikálás a könyvbemutatón.",
-        },
-        {
-          EsemenyID: 9,
-          Cime: "Októberfeszt",
-          Helyszin: "Békéscsaba, Sörkert",
-          Datum: "2025-10-10T18:00:00",
-          Leiras: "Kiváló sörök, élőzene és fantasztikus hangulat.",
-        },
-        {
-          EsemenyID: 10,
-          Cime: "Karácsonyi vásár",
-          Helyszin: "Székesfehérvár, Fő tér",
-          Datum: "2025-12-01T10:00:00",
-          Leiras: "Karácsonyi ajándékok, forralt bor és ünnepi hangulat.",
-        },
-        {
-          EsemenyID: 11,
-          Cime: "Újévi koncert",
-          Helyszin: "Budapest, Operaház",
-          Datum: "2026-01-01T19:00:00",
-          Leiras: "Köszöntsd az új évet egy felejthetetlen koncerttel!",
-        },
-        {
-          EsemenyID: 12,
-          Cime: "Tudományos előadás",
-          Helyszin: "Szeged, Egyetemi Aula",
-          Datum: "2026-02-15T14:00:00",
-          Leiras: "Érdekes tudományos témák közérthetően bemutatva.",
-        },
-        {
-          EsemenyID: 13,
-          Cime: "Tavaszi futóverseny",
-          Helyszin: "Veszprém, Városi Park",
-          Datum: "2026-03-20T08:00:00",
-          Leiras: "Nevezés minden távra! Fussa le az évet sportosan.",
-        },
-        {
-          EsemenyID: 14,
-          Cime: "Fotókiállítás",
-          Helyszin: "Nyíregyháza, Galéria",
-          Datum: "2026-04-05T15:00:00",
-          Leiras: "Lenyűgöző fotók a világ minden tájáról.",
-        },
-        {
-          EsemenyID: 15,
-          Cime: "Jazz Est",
-          Helyszin: "Pécs, Zenei Klub",
-          Datum: "2026-05-10T20:00:00",
-          Leiras: "Hangulatos este élő jazz zenével és koktélokkal.",
-        },
-        {
-          EsemenyID: 16,
-          Cime: "Hegymászó expedíció",
-          Helyszin: "Mátra, Hegyi Menedékház",
-          Datum: "2026-06-15T07:00:00",
-          Leiras: "Izgalmas kihívás a természet szerelmeseinek.",
-        },
-        {
-          EsemenyID: 17,
-          Cime: "Kézműves vásár",
-          Helyszin: "Győr, Piactér",
-          Datum: "2026-07-22T09:00:00",
-          Leiras: "Egyedi kézműves termékek és helyi alkotók bemutatkozása.",
-        },
-        {
-          EsemenyID: 18,
-          Cime: "Robotika bemutató",
-          Helyszin: "Budapest, Tech Park",
-          Datum: "2026-08-12T14:00:00",
-          Leiras: "A legújabb robotok és mesterséges intelligencia megoldások.",
-        },
-        {
-          EsemenyID: 19,
-          Cime: "Autós találkozó",
-          Helyszin: "Debrecen, Autópark",
-          Datum: "2026-09-30T11:00:00",
-          Leiras: "Veterán és modern autók kiállítása és bemutatója.",
-        },
-        {
-          EsemenyID: 20,
-          Cime: "Klasszikus zenei est",
-          Helyszin: "Szeged, Koncertterem",
-          Datum: "2026-10-20T19:00:00",
-          Leiras: "Gyönyörű klasszikus művek élő előadásban.",
-        },
-      ]);
+// Képek importálása
+import heartIcon from './heart.svg'; // Adj meg pontos elérési utat
+import xlgIcon from './xlg.svg'; // Adj meg pontos elérési utat
+
+export const EventList = ({ events }) => {
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  // Létrehoztunk egy objektumot, amely minden eseményhez külön-külön nyilvántartja a hover állapotot.
+  const [hoverStates, setHoverStates] = useState({});
+
+  const handleShowDetails = (event) => {
+    setSelectedEvent(event);
+    setShowModal(true);
+  };
+
+  const styles = {
+    zoom: {
+      transition: 'transform .2s',
+    },
+    zoomHover: {
+      transform: 'scale(1.03)',
+    },
+  };
+
+  const handleMouseEnter = (eventId) => {
+    setHoverStates((prev) => ({
+      ...prev,
+      [eventId]: true,
+    }));
+  };
+
+  const handleMouseLeave = (eventId) => {
+    setHoverStates((prev) => ({
+      ...prev,
+      [eventId]: false,
+    }));
+  };
+
   return (
     <div className="container mt-4">
-    <h2>Események</h2>
-    <div className="row">
-      {events.map(event => (
-        <div className="col-md-4" key={event.EsemenyID}>
-          <div className="card mb-3">
-            <div className="card-body">
-              <h5 className="card-title">{event.Cime}</h5>
-              <p className="card-text">Dátum: {event.Datum}</p>
-              <p className="card-text">Helyszín: {event.Helyszin}</p>
-              <p className="card-text">Leiras: {event.Leiras}</p>
-              <button className="btn btn-primary">Részletek</button>
+      <div className="row">
+        {events.map((event) => (
+          <div className="col-md-4" key={event.EsemenyID}>
+            <div className="card mb-3">
+              <img
+                src={"http://files.esemenyrendezo.nhely.hu/"+event.kepurl}
+                className="card-img-top"
+                alt={event.cime}
+                style={{ height: '200px', objectFit: 'cover' }} // Kép stílus beállítása
+              />
+              <div className="card-body">
+                <h5 className="card-title">{event.cime}</h5>
+                <p className="card-text">Dátum: {new Date(event.datum).toLocaleString()}</p>
+                <p className="card-text">Helyszín: {event.helyszin}</p>
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => handleShowDetails(event)}
+                  style={{
+                    ...styles.zoom,
+                    ...(hoverStates[event.id] ? styles.zoomHover : {}),
+                  }}
+                  onMouseEnter={() => handleMouseEnter(event.id)} // Gomb hover állapot kezelése
+                  onMouseLeave={() => handleMouseLeave(event.id)} // Hover állapot eltávolítása
+                  disabled={showModal} // Ha a modal nyitva van, letiltjuk a gombot
+                >
+                  Részletek
+                </button>
+                {/* SVG gombok hozzáadása */}
+                <div style={{ display: 'inline-block', marginLeft: '10px' }}>
+                  <button 
+                    style={{
+                      background: 'none', 
+                      border: 'none', 
+                      cursor: 'pointer',
+                      marginRight: '7px',
+                      padding: '5px',
+                    }}
+                  >
+                    <img 
+                      src={heartIcon} 
+                      alt="Heart" 
+                      style={{ width: '20px', verticalAlign: 'middle' }} 
+                    />
+                  </button>
+                  <button 
+                    style={{
+                      background: 'none', 
+                      border: 'none', 
+                      cursor: 'pointer', 
+                      padding: '5px',
+                    }}
+                  >
+                    <img 
+                      src={xlgIcon} 
+                      alt="XLG" 
+                      style={{ width: '20px', verticalAlign: 'middle' }} 
+                    />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+
+      {/* Modal az esemény részleteihez */}
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>{selectedEvent?.cime}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <img
+            src={"http://files.esemenyrendezo.nhely.hu/"+selectedEvent?.kepurl}
+            alt={selectedEvent?.cime}
+            className="img-fluid mb-3" // A kép a modális ablakban is reszponzív legyen
+            style={{ width: '100%', objectFit: 'cover' }} // Kép stílus beállítása a modálban
+          />
+          <p><strong>Dátum:</strong> {new Date(selectedEvent?.datum).toLocaleString()}</p>
+          <p><strong>Helyszín:</strong> {selectedEvent?.helyszin}</p>
+          <p><strong>Leírás:</strong> {selectedEvent?.leiras}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            style={{
+              backgroundColor: 'gray',
+              ...styles.zoom,
+              ...(hoverStates[selectedEvent?.id] ? styles.zoomHover : {}),
+            }} // Hover és zoom alkalmazása itt
+            variant="secondary"
+            onClick={() => setShowModal(false)}
+            onMouseEnter={() => handleMouseEnter(selectedEvent?.id)} // Hover állapot beállítása
+            onMouseLeave={() => handleMouseLeave(selectedEvent?.id)} // Hover állapot eltávolítása
+          >
+            Bezárás
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
-  </div>
   );
 };
