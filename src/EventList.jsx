@@ -1,9 +1,10 @@
-import React, { useState } from 'react'; // Itt importáljuk a useState-et 
+import React, { useState } from 'react'; // Import useState 
 import { Modal, Button } from 'react-bootstrap';
 
 // Képek importálása
-import heartIcon from './heart.svg'; // Adj meg pontos elérési utat
-import xlgIcon from './xlg.svg'; // Adj meg pontos elérési utat
+import heartIcon from './heart.svg'; // Regular heart icon
+import heartFillIcon from './heart-fill.svg'; // Add this import for the filled heart icon
+// Remove the xlgIcon import since we won't be using it anymore
 
 export const EventList = ({ events }) => {
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -11,6 +12,9 @@ export const EventList = ({ events }) => {
 
   // Létrehoztunk egy objektumot, amely minden eseményhez külön-külön nyilvántartja a hover állapotot.
   const [hoverStates, setHoverStates] = useState({});
+  
+  // Add a new state to track which hearts are filled
+  const [filledHearts, setFilledHearts] = useState({});
 
   const handleShowDetails = (event) => {
     setSelectedEvent(event);
@@ -37,6 +41,15 @@ export const EventList = ({ events }) => {
     setHoverStates((prev) => ({
       ...prev,
       [eventId]: false,
+    }));
+  };
+
+  // Add a function to handle heart icon click
+  const handleHeartClick = (eventId, e) => {
+    e.preventDefault(); // Prevent any default behavior
+    setFilledHearts(prev => ({
+      ...prev,
+      [eventId]: !prev[eventId] // Toggle the heart state
     }));
   };
 
@@ -69,37 +82,24 @@ export const EventList = ({ events }) => {
                 >
                   Részletek
                 </button>
-                {/* SVG gombok hozzáadása */}
+                {/* Only show the heart icon (either filled or unfilled) */}
                 <div style={{ display: 'inline-block', marginLeft: '10px' }}>
                   <button 
                     style={{
                       background: 'none', 
                       border: 'none', 
                       cursor: 'pointer',
-                      marginRight: '7px',
                       padding: '5px',
                     }}
+                    onClick={(e) => handleHeartClick(event.EsemenyID, e)}
                   >
                     <img 
-                      src={heartIcon} 
+                      src={filledHearts[event.EsemenyID] ? heartFillIcon : heartIcon} 
                       alt="Heart" 
                       style={{ width: '20px', verticalAlign: 'middle' }} 
                     />
                   </button>
-                  <button 
-                    style={{
-                      background: 'none', 
-                      border: 'none', 
-                      cursor: 'pointer', 
-                      padding: '5px',
-                    }}
-                  >
-                    <img 
-                      src={xlgIcon} 
-                      alt="XLG" 
-                      style={{ width: '20px', verticalAlign: 'middle' }} 
-                    />
-                  </button>
+                  {/* Removed the X icon button */}
                 </div>
               </div>
             </div>
