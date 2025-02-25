@@ -17,6 +17,9 @@ export const App = () => {
   const [events, setEvents] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [filterDate, setFilterDate] = useState('');  // Dátum szűrő állapot
+  const [filterLocation, setFilterLocation] = useState('');  // Helyszín szűrő állapot
+  const [filterName, setFilterName] = useState('');  // Esemény neve szűrő állapot
 
   // Ellenőrizzük, hogy a felhasználó be van-e jelentkezve a localStorage-ból
   useEffect(() => {
@@ -43,6 +46,14 @@ export const App = () => {
     });
     setIsModalOpen(false);
   };
+
+  // Szűrjük az eseményeket dátum, helyszín és név alapján
+  const filteredEvents = events.filter(event => {
+    const isDateMatch = filterDate ? new Date(event.datum).toLocaleDateString() === new Date(filterDate).toLocaleDateString() : true;
+    const isLocationMatch = filterLocation ? event.helyszin?.toLowerCase().includes(filterLocation.toLowerCase()) : true;
+    const isNameMatch = filterName ? event.cime?.toLowerCase().includes(filterName.toLowerCase()) : true;
+    return isDateMatch && isLocationMatch && isNameMatch;
+  });
 
   return (
     <Router>
@@ -83,38 +94,37 @@ export const App = () => {
                       </button>
                     </li>
                     <li className="nav-item dropdown">
-                  <NavLink
-                    to="#"
-                    className="nav-link dropdown-toggle"
-                    id="navbarDropdown"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    style={{ backgroundColor: 'transparent', border: 'none', color: 'black' }}
-                  >
-                    Továbbiak
-                  </NavLink>
-                  <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li>
-                      <NavLink to="/chat" className={({ isActive }) => "dropdown-item" + (isActive ? " active" : "")}>
-                        Chat
+                      <NavLink
+                        to="#"
+                        className="nav-link dropdown-toggle"
+                        id="navbarDropdown"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        style={{ backgroundColor: 'transparent', border: 'none', color: 'black' }}
+                      >
+                        Továbbiak
                       </NavLink>
+                      <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                          <NavLink to="/chat" className={({ isActive }) => "dropdown-item" + (isActive ? " active" : "")}>
+                            Chat
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink to="/calendar" className={({ isActive }) => "dropdown-item" + (isActive ? " active" : "")}>
+                            Kalendárium
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink to="/saved" className={({ isActive }) => "dropdown-item" + (isActive ? " active" : "")}>
+                            Mentések
+                          </NavLink>
+                        </li>
+                      </ul>
                     </li>
-                    <li>
-                      <NavLink to="/calendar" className={({ isActive }) => "dropdown-item" + (isActive ? " active" : "")}>
-                        Kalendárium
-                      </NavLink>
-                    </li>
-                    <li>
-                      <NavLink to="/saved" className={({ isActive }) => "dropdown-item" + (isActive ? " active" : "")}>
-                        Mentések
-                      </NavLink>
-                    </li>
-                  </ul>
-                </li>
                   </>
                 )}
-                
               </ul>
               <ul className="navbar-nav ms-auto">
                 {!user ? (  // Ha a felhasználó nincs bejelentkezve
@@ -144,10 +154,41 @@ export const App = () => {
           </div>
         </nav>
 
-        {/* Események listája */}
+        {/* Események szűrése dátum, helyszín és név alapján */}
         <div className="container mt-4">
+          <div className="row mb-3">
+            <div className="col">
+              <input 
+                type="date" 
+                className="form-control" 
+                value={filterDate} 
+                onChange={(e) => setFilterDate(e.target.value)} 
+                placeholder="Válassz dátumot"
+              />
+            </div>
+            <div className="col">
+              <input 
+                type="text" 
+                className="form-control" 
+                value={filterLocation} 
+                onChange={(e) => setFilterLocation(e.target.value)} 
+                placeholder="Helyszín keresése"
+              />
+            </div>
+            <div className="col">
+              <input 
+                type="text" 
+                className="form-control" 
+                value={filterName} 
+                onChange={(e) => setFilterName(e.target.value)} 
+                placeholder="Esemény neve"
+              />
+            </div>
+          </div>
+
+          {/* Események listája */}
           <Routes>
-            <Route path="/events" element={<EventList events={events} />} />
+            <Route path="/events" element={<EventList events={filteredEvents} />} />
             <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
