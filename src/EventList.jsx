@@ -57,7 +57,7 @@ export const EventList = ({ events }) => {
     <div className="container mt-4">
       <div className="row">
         {events.map((event) => (
-          <div className="col-md-4" key={event.EsemenyID}>
+          <div className="col-md-4" key={event.id}>
             <div className="card mb-3">
               <img
                 src={"http://files.esemenyrendezo.nhely.hu/"+event.kepurl}
@@ -91,10 +91,10 @@ export const EventList = ({ events }) => {
                       cursor: 'pointer',
                       padding: '5px',
                     }}
-                    onClick={(e) => handleHeartClick(event.EsemenyID, e)}
+                    onClick={(e) => handleHeartClick(event.id, e)}
                   >
                     <img 
-                      src={filledHearts[event.EsemenyID] ? heartFillIcon : heartIcon} 
+                      src={filledHearts[event.id] ? heartFillIcon : heartIcon} 
                       alt="Heart" 
                       style={{ width: '20px', verticalAlign: 'middle' }} 
                     />
