@@ -1,20 +1,76 @@
-import React, { useState } from 'react'; // Import useState 
+import React, { useState, useEffect } from 'react';
+import { useGlobalContext } from './Context/GlobalContext';
 import { Modal, Button } from 'react-bootstrap';
+import axios from 'axios';
 
 // Képek importálása
 import heartIcon from './heart.svg'; // Regular heart icon
-import heartFillIcon from './heart-fill.svg'; // Add this import for the filled heart icon
-// Remove the xlgIcon import since we won't be using it anymore
+import heartFillIcon from './heart-fill.svg'; // Filled heart icon
 
 export const EventList = ({ events }) => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showModal, setShowModal] = useState(false);
-
-  // Létrehoztunk egy objektumot, amely minden eseményhez külön-külön nyilvántartja a hover állapotot.
   const [hoverStates, setHoverStates] = useState({});
-  
-  // Add a new state to track which hearts are filled
   const [filledHearts, setFilledHearts] = useState({});
+  const [initialLoadDone, setInitialLoadDone] = useState(false);
+  const {apiUrl, loggedUser} = useGlobalContext();
+
+  // Get the user token from localStorage
+  const userData = JSON.parse(localStorage.getItem('felhasz'));
+  const token = userData ? userData.token : null;
+
+  // Check which events are already saved when component loads
+  useEffect(() => {
+    const checkSavedEvents = async () => {
+      if (!token || !events.length || initialLoadDone) return;
+
+      try {
+        const savedHearts = {};
+        
+        // Check each event if it's saved
+        for (const event of events) {
+          const response = await axios.get(`${apiUrl}Reszvetel/check/${token}/${event.id}`);
+          savedHearts[event.id] = response.data;
+        }
+
+        setFilledHearts(savedHearts);
+        setInitialLoadDone(true);
+      } catch (error) {
+        console.error('Error checking saved events:', error);
+      }
+    };
+
+    checkSavedEvents();
+  }, [events, initialLoadDone, token]);
+
+  // Updated function to handle heart icon click with API calls
+  const handleHeartClick = async (eventId, e) => {
+    e.preventDefault();
+    
+    if (!token) {
+      alert('You must be logged in to save events');
+      return;
+    }
+
+    try {
+      alert(loggedUser.name);
+      if (filledHearts[eventId]) {
+        // If heart is filled, unsave the event
+        await axios.delete(`${apiUrl}Reszvetel/${token}/${eventId}`);
+      } else {
+        // If heart is not filled, save the event
+        await axios.post(`${apiUrl}Reszvetel/${token}/${eventId}`);
+      }
+
+      // Toggle the heart state
+      setFilledHearts(prev => ({
+        ...prev,
+        [eventId]: !prev[eventId]
+      }));
+    } catch (error) {
+      alert('Error: ' + (error.response?.data || error.message));
+    }
+  };
 
   const handleShowDetails = (event) => {
     setSelectedEvent(event);
@@ -44,15 +100,6 @@ export const EventList = ({ events }) => {
     }));
   };
 
-  // Add a function to handle heart icon click
-  const handleHeartClick = (eventId, e) => {
-    e.preventDefault(); // Prevent any default behavior
-    setFilledHearts(prev => ({
-      ...prev,
-      [eventId]: !prev[eventId] // Toggle the heart state
-    }));
-  };
-
   return (
     <div className="container mt-4">
       <div className="row">
@@ -63,7 +110,7 @@ export const EventList = ({ events }) => {
                 src={"http://files.esemenyrendezo.nhely.hu/"+event.kepurl}
                 className="card-img-top"
                 alt={event.cime}
-                style={{ height: '200px', objectFit: 'cover' }} // Kép stílus beállítása
+                style={{ height: '200px', objectFit: 'cover' }}
               />
               <div className="card-body">
                 <h5 className="card-title">{event.cime}</h5>
@@ -76,13 +123,12 @@ export const EventList = ({ events }) => {
                     ...styles.zoom,
                     ...(hoverStates[event.id] ? styles.zoomHover : {}),
                   }}
-                  onMouseEnter={() => handleMouseEnter(event.id)} // Gomb hover állapot kezelése
-                  onMouseLeave={() => handleMouseLeave(event.id)} // Hover állapot eltávolítása
-                  disabled={showModal} // Ha a modal nyitva van, letiltjuk a gombot
+                  onMouseEnter={() => handleMouseEnter(event.id)}
+                  onMouseLeave={() => handleMouseLeave(event.id)}
+                  disabled={showModal}
                 >
                   Részletek
                 </button>
-                {/* Only show the heart icon (either filled or unfilled) */}
                 <div style={{ display: 'inline-block', marginLeft: '10px' }}>
                   <button 
                     style={{
@@ -99,7 +145,6 @@ export const EventList = ({ events }) => {
                       style={{ width: '20px', verticalAlign: 'middle' }} 
                     />
                   </button>
-                  {/* Removed the X icon button */}
                 </div>
               </div>
             </div>
@@ -116,8 +161,8 @@ export const EventList = ({ events }) => {
           <img
             src={"http://files.esemenyrendezo.nhely.hu/"+selectedEvent?.kepurl}
             alt={selectedEvent?.cime}
-            className="img-fluid mb-3" // A kép a modális ablakban is reszponzív legyen
-            style={{ width: '100%', objectFit: 'cover' }} // Kép stílus beállítása a modálban
+            className="img-fluid mb-3"
+            style={{ width: '100%', objectFit: 'cover' }}
           />
           <p><strong>Dátum:</strong> {new Date(selectedEvent?.datum).toLocaleString()}</p>
           <p><strong>Helyszín:</strong> {selectedEvent?.helyszin}</p>
@@ -129,11 +174,11 @@ export const EventList = ({ events }) => {
               backgroundColor: 'gray',
               ...styles.zoom,
               ...(hoverStates[selectedEvent?.id] ? styles.zoomHover : {}),
-            }} // Hover és zoom alkalmazása itt
+            }}
             variant="secondary"
             onClick={() => setShowModal(false)}
-            onMouseEnter={() => handleMouseEnter(selectedEvent?.id)} // Hover állapot beállítása
-            onMouseLeave={() => handleMouseLeave(selectedEvent?.id)} // Hover állapot eltávolítása
+            onMouseEnter={() => handleMouseEnter(selectedEvent?.id)}
+            onMouseLeave={() => handleMouseLeave(selectedEvent?.id)}
           >
             Bezárás
           </Button>
@@ -142,3 +187,5 @@ export const EventList = ({ events }) => {
     </div>
   );
 };
+
+export default EventList;
