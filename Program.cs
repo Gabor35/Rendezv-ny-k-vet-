@@ -62,7 +62,7 @@ namespace esemenyrendezo
         public static void Main(string[] args)
         {
             //Ezt ki kell venni éless üzemnél!! Ez csak a tszt üzemhez van!!!
-            Program.LoggedInUsers["token"] = new Felhasznalo { Jogosultsag = 9 };
+            Program.LoggedInUsers["43062203-14a0-415f-9f60-57abb45e1754"] = new Felhasznalo { Id=1, Jogosultsag = 9 };
 
             var builder = WebApplication.CreateBuilder(args);
 
