@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const AddEvent = ({ onAddEvent }) => {
   const [newEvent, setNewEvent] = useState({
@@ -6,7 +7,7 @@ const AddEvent = ({ onAddEvent }) => {
     Helyszin: '',
     Datum: '',
     Leiras: '',
-    KépURL: ''  // Kép URL-t is tárolunk
+    Kepurl: ''  // Kép URL-t is tárolunk
   });
   const [error, setError] = useState('');  // Hibák tárolása
 
@@ -24,28 +25,37 @@ const AddEvent = ({ onAddEvent }) => {
       const imageUrl = URL.createObjectURL(file);  // Kép URL létrehozása
       setNewEvent({
         ...newEvent,
-        KépURL: imageUrl  // Kép URL tárolása az állapotban
+        Kepurl: imageUrl  // Kép URL tárolása az állapotban
       });
     }
   };
 
   const handleAddEvent = () => {
     // Validálás, hogy a kötelező mezők ki vannak-e töltve, és a kép is ki van-e választva
-    if (!newEvent.Cime || !newEvent.Helyszin || !newEvent.Datum || !newEvent.KépURL) {
-      setError('Minden mezőt kikell tölteni, kivétel az esemény leírását!');  // Hibás mezők üzenete
+    if (!newEvent.Cime || !newEvent.Helyszin || !newEvent.Datum) {
+      setError('Minden mezőt ki kell tölteni, kivéve az esemény leírását!');  // Hibás mezők üzenete
       return;
     }
 
     const newEventObj = { ...newEvent, EsemenyID: Date.now() };
-    onAddEvent(newEventObj); // Új esemény hozzáadása a szülő komponenshez
-    setNewEvent({
-      Cime: '',
-      Helyszin: '',
-      Datum: '',
-      Leiras: '',
-      KépURL: ''  // Kép URL törlése, ha az eseményt hozzáadták
-    });
-    setError('');  // Hiba törlése
+
+    // Küldjük az új eseményt a backend API-hoz
+    axios.post('http://localhost:5000/api/Esemeny', newEventObj)
+      .then(response => {
+        onAddEvent(response.data); // Új esemény hozzáadása a szülő komponenshez
+        setNewEvent({
+          Cime: '',
+          Helyszin: '',
+          Datum: '',
+          Leiras: '',
+          Kepurl: ''  // Kép URL törlése, ha az eseményt hozzáadták
+        });
+        setError('');  // Hiba törlése
+      })
+      .catch(error => {
+        console.error('Error adding event:', error);
+        setError('Hiba történt az esemény hozzáadása során.');
+      });
   };
 
   return (
@@ -97,7 +107,6 @@ const AddEvent = ({ onAddEvent }) => {
           />
         </div>
 
-
         {/* Kép feltöltése */}
         <div className="mb-3">
           <label htmlFor="imageUpload" className="form-label">Válassz képet</label>
@@ -107,9 +116,9 @@ const AddEvent = ({ onAddEvent }) => {
             className="form-control"
             onChange={handleImageChange}
           />
-          {newEvent.KépURL && (
+          {newEvent.Kepurl && (
             <div className="mt-3">
-              <img src={newEvent.KépURL} alt="Esemény kép" style={{ maxWidth: '200px' }} />
+              <img src={newEvent.Kepurl} alt="Esemény kép" style={{ maxWidth: '200px' }} />
             </div>
           )}
         </div>

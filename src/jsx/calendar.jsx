@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
+import { motion } from 'framer-motion';
 import '../calendar.css';
 
 export const Calendar = () => {
@@ -7,37 +8,49 @@ export const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [events, setEvents] = useState([]);
 
-  // Get events from App.jsx's events state through props or context
   useEffect(() => {
-    // You would typically get this from props or context
     const storedEvents = JSON.parse(localStorage.getItem('events')) || [];
     setEvents(storedEvents);
   }, []);
 
-  const renderHeader = () => {
-    return (
-      <div className="calendar-header">
-        <button onClick={() => setCurrentDate(moment(currentDate).subtract(1, 'month'))}>
-          &lt;
-        </button>
-        <h2>{currentDate.format('MMMM YYYY')}</h2>
-        <button onClick={() => setCurrentDate(moment(currentDate).add(1, 'month'))}>
-          &gt;
-        </button>
-      </div>
-    );
-  };
+  const renderHeader = () => (
+    <motion.div 
+      className="calendar-header"
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <button onClick={() => setCurrentDate(moment(currentDate).subtract(1, 'month'))}>
+        &lt;
+      </button>
+      <h2>{currentDate.format('MMMM YYYY')}</h2>
+      <button onClick={() => setCurrentDate(moment(currentDate).add(1, 'month'))}>
+        &gt;
+      </button>
+    </motion.div>
+  );
 
   const renderDays = () => {
     const weekdays = ['Vas', 'Hét', 'Ke', 'Sze', 'Csü', 'Pén', 'Szo'];
     return (
-      <div className="calendar-days">
-        {weekdays.map(day => (
-          <div key={day} className="calendar-day-name">
+      <motion.div 
+        className="calendar-days"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        {weekdays.map((day, index) => (
+          <motion.div 
+            key={day} 
+            className="calendar-day-name"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.1 }}
+          >
             {day}
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     );
   };
 
@@ -59,27 +72,34 @@ export const Calendar = () => {
         );
 
         days.push(
-          <div
+          <motion.div
             key={day}
             className={`calendar-cell ${
               !cloneDay.isSame(currentDate, 'month') ? 'disabled' : ''
             } ${cloneDay.isSame(moment(), 'day') ? 'today' : ''}`}
             onClick={() => setSelectedDate(cloneDay)}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: (day.diff(startDate, 'days') * 0.05) }}
           >
             <span>{cloneDay.format('D')}</span>
             {eventsForDay.length > 0 && (
-              <div className="event-dot">
-                {eventsForDay.length}
-              </div>
+              <div className="event-dot">{eventsForDay.length}</div>
             )}
-          </div>
+          </motion.div>
         );
         day = moment(day).add(1, 'day');
       }
       rows.push(
-        <div key={day} className="calendar-row">
+        <motion.div 
+          key={day} 
+          className="calendar-row"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           {days}
-        </div>
+        </motion.div>
       );
       days = [];
     }
@@ -87,14 +107,22 @@ export const Calendar = () => {
   };
 
   return (
-    <div className="calendar-container">
+    <motion.div 
+      className="calendar-container"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       {renderHeader()}
       {renderDays()}
-      <div className="calendar-body">
-        {renderCells()}
-      </div>
+      <div className="calendar-body">{renderCells()}</div>
       {selectedDate && (
-        <div className="selected-date-events">
+        <motion.div 
+          className="selected-date-events"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
           <h3>{selectedDate.format('YYYY. MMMM D.')}</h3>
           {events
             .filter(event => 
@@ -107,8 +135,8 @@ export const Calendar = () => {
                 <p>{moment(event.Datum).format('HH:mm')}</p>
               </div>
             ))}
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 };

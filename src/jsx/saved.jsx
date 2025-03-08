@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import axios from 'axios';
 import { useGlobalContext } from '../Context/GlobalContext';
+import { motion } from 'framer-motion'; // Framer Motion importálása
 
 // Import icons
 import heartFillIcon from '../pictures/heart-fill.svg';
@@ -12,14 +13,11 @@ export const Saved = () => {
   const [error, setError] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [hoverStates, setHoverStates] = useState({});
-  const {apiUrl} = useGlobalContext();
+  const { apiUrl, ftpUrl } = useGlobalContext();
 
-  // Get the user data from localStorage and extract the token
   const userData = JSON.parse(localStorage.getItem('felhasz'));
   const token = userData ? userData.token : null;
 
-  // Fetch saved events when component mounts
   useEffect(() => {
     const fetchSavedEvents = async () => {
       setLoading(true);
@@ -29,24 +27,16 @@ export const Saved = () => {
           setLoading(false);
           return;
         }
-
-        // Log the token and URL for debugging
-        console.log('Token:', token);
-        console.log('API URL:', `/api/Reszvetel/saved/${token}`);
-
-        const response = await axios.get(`http://localhost:5000/api/Reszvetel/saved/${token}`);
-        console.log('API Response:', response.data);
+        const response = await axios.get(`${apiUrl}Reszvetel/saved/${token}`);
         setSavedEvents(response.data);
         setError(null);
       } catch (err) {
-        console.error('Error details:', err);
         setError('Failed to fetch saved events: ' + (err.response?.data || err.message));
         setSavedEvents([]);
       } finally {
         setLoading(false);
       }
     };
-
     fetchSavedEvents();
   }, [token]);
 
@@ -55,49 +45,18 @@ export const Saved = () => {
     setShowModal(true);
   };
 
-  const handleMouseEnter = (eventId) => {
-    setHoverStates((prev) => ({
-      ...prev,
-      [eventId]: true,
-    }));
-  };
-
-  const handleMouseLeave = (eventId) => {
-    setHoverStates((prev) => ({
-      ...prev,
-      [eventId]: false,
-    }));
-  };
-
-  // Handle removing an event from saved
   const handleUnsaveEvent = async (eventId, e) => {
     e.preventDefault();
-    
     if (!token) {
       setError('You must be logged in to unsave events');
       return;
     }
-
     try {
-      console.log('Unsaving event:', eventId);
-      console.log('API URL:', `${apiUrl}Reszvetel/${token}/${eventId}`);
-      
       await axios.delete(`${apiUrl}Reszvetel/${token}/${eventId}`);
-      // Remove the event from the local state
       setSavedEvents(savedEvents.filter(event => event.id !== eventId));
     } catch (err) {
-      console.error('Error details:', err);
       setError('Failed to unsave event: ' + (err.response?.data || err.message));
     }
-  };
-
-  const styles = {
-    zoom: {
-      transition: 'transform .2s',
-    },
-    zoomHover: {
-      transform: 'scale(1.03)',
-    },
   };
 
   if (loading) {
@@ -110,18 +69,24 @@ export const Saved = () => {
 
   if (savedEvents.length === 0) {
     return <div className="container mt-4 d-flex justify-content-center align-items-center" style={{ height: "100vh", fontSize: "30px" }}>
-    <div className="text-white">Nincsenek mentések!</div>
-  </div>
+      <div className="text-white">Nincsenek mentések!</div>
+    </div>;
   }
 
   return (
     <div className="container mt-4">
       <div className="row">
-        {savedEvents.map((event) => (
-          <div className="col-md-4" key={event.id}>
+        {savedEvents.map((event, index) => (
+          <motion.div 
+            className="col-md-4" 
+            key={event.id} 
+            initial={{ opacity: 0, y: 50 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ delay: index * 0.1, duration: 0.5 }}
+          >
             <div className="card mb-3">
               <img
-                src={"http://files.esemenyrendezo.nhely.hu/"+event.kepurl}
+                src={`${ftpUrl}${event.kepurl}`}
                 className="card-img-top"
                 alt={event.cime}
                 style={{ height: '200px', objectFit: 'cover' }}
@@ -130,50 +95,40 @@ export const Saved = () => {
                 <h5 className="card-title">{event.cime}</h5>
                 <p className="card-text">Dátum: {new Date(event.datum).toLocaleString()}</p>
                 <p className="card-text">Helyszín: {event.helyszin}</p>
-                <button
+                <motion.button
                   className="btn btn-secondary"
                   onClick={() => handleShowDetails(event)}
-                  style={{
-                    ...styles.zoom,
-                    ...(hoverStates[event.id] ? styles.zoomHover : {}),
-                  }}
-                  onMouseEnter={() => handleMouseEnter(event.id)}
-                  onMouseLeave={() => handleMouseLeave(event.id)}
-                  disabled={showModal}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   Részletek
-                </button>
+                </motion.button>
                 <div style={{ display: 'inline-block', marginLeft: '10px' }}>
                   <button 
-                    style={{
-                      background: 'none', 
-                      border: 'none', 
-                      cursor: 'pointer',
-                      padding: '5px',
-                    }}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '5px' }}
                     onClick={(e) => handleUnsaveEvent(event.id, e)}
                   >
-                    <img 
+                    <motion.img 
                       src={heartFillIcon} 
                       alt="Unsave" 
                       style={{ width: '20px', verticalAlign: 'middle' }} 
+                      whileHover={{ scale: 1.2 }}
                     />
                   </button>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
 
-      {/* Modal for event details */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>{selectedEvent?.cime}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <img
-            src={"http://files.esemenyrendezo.nhely.hu/"+selectedEvent?.kepurl}
+            src={`${ftpUrl}${selectedEvent?.kepurl}`}
             alt={selectedEvent?.cime}
             className="img-fluid mb-3"
             style={{ width: '100%', objectFit: 'cover' }}
@@ -183,19 +138,14 @@ export const Saved = () => {
           <p><strong>Leírás:</strong> {selectedEvent?.leiras}</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button
-            style={{
-              backgroundColor: 'gray',
-              ...styles.zoom,
-              ...(hoverStates[selectedEvent?.id] ? styles.zoomHover : {}),
-            }}
-            variant="secondary"
+          <motion.button
+            className="btn btn-secondary"
             onClick={() => setShowModal(false)}
-            onMouseEnter={() => handleMouseEnter(selectedEvent?.id)}
-            onMouseLeave={() => handleMouseLeave(selectedEvent?.id)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             Bezárás
-          </Button>
+          </motion.button>
         </Modal.Footer>
       </Modal>
     </div>
