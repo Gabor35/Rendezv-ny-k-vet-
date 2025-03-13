@@ -21,16 +21,59 @@
 \usepackage{stackengine,scalerel}
 \def\tang{\ThisStyle{\abovebaseline[0pt]{\scalebox{-1}{$\SavedStyle\perp$}}}}
 
+% Define JavaScript language for listings
+\lstdefinelanguage{JavaScript}{
+	keywords={break, case, catch, continue, debugger, default, delete,
+		do, else, finally, for, function, if, in, instanceof, new, return,
+		switch, this, throw, try, typeof, var, void, while, with, let, const,
+		export, import, await, async},
+	ndkeywords={class, export, boolean, throw, implements, import, this, new},
+	sensitive=true,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]',
+	morestring=[b]",
+	alsoletter={-},
+	alsodigit={:},
+	morekeywords=[2]{=>, yield, async, await, constructor},
+	keywordstyle=\color{blue}\bfseries,
+	ndkeywordstyle=\color{green}\bfseries,
+	identifierstyle=\color{black},
+	commentstyle=\color{gray}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+}
+
+% Customize listings appearance
+\lstset{
+	language=JavaScript,
+	extendedchars=true,
+	inputencoding=utf8,
+	basicstyle=\ttfamily\small,
+	numbers=left,
+	numberstyle=\tiny\color{gray},
+	stepnumber=1,
+	numbersep=10pt,
+	showstringspaces=false,
+	breaklines=true,
+	frame=single,
+	captionpos=b,
+	escapeinside={\%*}{*)},
+}
+
+% Fordított 'T' szimbólum definiálása
+\def\tang{\ThisStyle{\abovebaseline[0pt]{\scalebox{-1}{$\SavedStyle\perp$}}}}
+
+
 \begin{document}
 
-\title{Rendezvény Követő\\[1em]
+\title{Eseményrendező\\[1em]
 	\begin{center}
 		\includegraphics[width=0.4\textwidth]{logo.jpg}
 \end{center}}
 \author{Pusztai Gábor\\ Iváncsik Ábrahám\\és Fehér Dominik\\Szoftverfejlesztő és -tesztelő szak}
 \supervisor{Kerényi Róbert Nándor\\oktató}
 \city{Miskolc}
-\date{2024}
+\date{2025}
 \maketitle
 
 \tableofcontents
@@ -38,19 +81,19 @@
 \chapter*{Bevezetés}
 \addcontentsline{toc}{chapter}{Bevezetés}
 
-A digitális világ folyamatos fejlődése során egyre fontosabbá vált a közösségek szerveződése és a személyes találkozások megkönnyítése, akár egy adott esemény keretében. Ezért döntöttünk úgy, hogy olyan rendszert tervezünk, amely egyszerűvé és átláthatóvá teszi az események létrehozását, valamint a részvételi visszajelzések kezelését. Az eseményszervezés kihívásai közé tartozik, hogy könnyen elérhető legyen a helyszín, minden résztvevő időben értesüljön a fontos részletekről, és a visszajelzések megfelelően legyenek kezelve.
+A digitális világ folyamatos fejlődése során egyre fontosabbá vált a közösségek szerveződése és a személyes találkozások megkönnyítése, akár egy adott esemény keretében. Ezért döntöttünk úgy, hogy olyan rendszert tervezünk, amely egyszerűvé és átláthatóvá teszi az események létrehozását, valamint a részvételi visszajelzések kezelését.
 
- Az online platformok lehetővé teszik, hogy ezeket a problémákat egyetlen rendszerben oldjuk meg. Ez a projekt olyan funkciókat tartalmaz, mint a felhasználók regisztrációja és események létrehozása, amelyek egyaránt célozzák a személyes és professzionális eseményeket, például koncerteket, workshopokat, vagy előadásokat. Az egyszerűség érdekében a felhasználók könnyen bejelentkezhetnek, eseményeket hozhatnak létre, valamint interaktív módon visszajelzést adhatnak részvételükről.
+ Az eseményszervezés kihívásai közé tartozik, hogy könnyen elérhető legyen a helyszín, minden résztvevő időben értesüljön a fontos részletekről, és a visszajelzések megfelelően legyenek kezelve. Az online platformok lehetővé teszik, hogy ezeket a problémákat egyetlen rendszerben oldjuk meg. Ez a projekt olyan funkciókat tartalmaz, mint a felhasználók regisztrációja és események létrehozása, amelyek egyaránt célozzák a személyes és professzionális eseményeket, például koncerteket, workshopokat, vagy előadásokat. Az egyszerűség érdekében a felhasználók könnyen bejelentkezhetnek, eseményeket hozhatnak létre, valamint interaktív módon visszajelzést adhatnak részvételükről.
  
- Ez a megoldás nemcsak a regisztrált, hanem a nem regisztrált felhasználók számára is biztosítja az eseményekre történő meghívás és részvétel lehetőségét, így szélesebb közönséget elérve. A projekt célja tehát egy olyan átfogó rendszer kialakítása, amely megkönnyíti az eseményszervezést és a résztvevők közti kommunikációt, egyúttal modern, interaktív és felhasználóbarát megoldásokat kínál.
-\cite{Fazekas}
+  Az alkalmazás további előnyei közé tartozik a geolokációs integráció, amely lehetővé teszi, hogy a felhasználók pontosan meghatározzák az események helyszínét egy térképen keresztül. Ez a megoldás nemcsak a regisztrált, hanem a nem regisztrált felhasználók számára is biztosítja az eseményekre történő meghívás és részvétel lehetőségét, így szélesebb közönséget elérve. A projekt célja tehát egy olyan átfogó rendszer kialakítása, amely megkönnyíti az eseményszervezést és a résztvevők közti kommunikációt, egyúttal modern, interaktív és felhasználóbarát megoldásokat kínál.
+
 
 \chapter{Technológiai háttér}
 
 \section{Relációs Adatbáziskezelő Rendszerek}
 
 A relációs adatbáziskezelő rendszerek (RDBMS) olyan szoftverek, amelyek az adatokat táblázatos formában tárolják, lehetővé téve az adatok közötti komplex kapcsolatok egyszerű kezelését. A relációs modell, amely a matematikai relációkon alapul, biztosítja, hogy az adatok logikusan és strukturáltan legyenek rendezve, ezáltal elősegítve az adatok hatékony keresését, lekérdezését és manipulálását.
-
+\cite{relacio1}
 Az RDBMS-ek legfontosabb jellemzője, hogy az adatok közötti kapcsolatokra fókuszálnak. Minden adatbázis egy vagy több táblából áll, ahol a táblák sorokból (rekordok) és oszlopokból (attribútumok) épülnek fel. A primér kulcs (egyedi azonosító) garantálja, hogy minden rekord egyedi legyen, míg az idegen kulcsok lehetővé teszik a táblák közötti kapcsolatok definiálását. Ezen kapcsolatok révén az RDBMS-ek lehetővé teszik az adatok integritásának fenntartását és a redundancia minimalizálását.
 
 Az RDBMS-ek legfontosabb jellemzői közé tartozik a tranzakciókezelés, amely biztosítja az adatok konzisztenciáját. A tranzakciók atomitása, konzisztenciája, izolációja és tartóssága (ACID elvek) biztosítják, hogy egy műveletsorozat vagy teljes mértékben végrehajtódik, vagy egyáltalán nem, ezzel megelőzve az adatvesztést és a sérüléseket.
@@ -84,6 +127,7 @@ A MySQL/MariaDB és a PHPMyAdmin kombinációja lehetővé teszi a fejlesztők �
 \section{.NET Web API}
 
 A .NET Web API a Microsoft által fejlesztett keretrendszer, mely lehetővé teszi HTTP-alapú szolgáltatások létrehozását RESTful elvek mentén. Az alkalmazások fejlesztéséhez az ASP.NET Core Web API-t használják, amely a .NET Core platform része. Ez a technológia skálázható, jól tesztelhető és platformfüggetlen megoldást kínál API-k létrehozására.
+\cite{net1}
 
 Főbb jellemzői:
 
@@ -101,6 +145,7 @@ Az ASP.NET Core Web API lehetővé teszi a fejlesztők számára, hogy gyorsan �
 
 Bevezetés
 A React egy JavaScript könyvtár, amelyet a Facebook fejlesztett ki 2013-ban. A React célja, hogy segítse a fejlesztőket dinamikus, interaktív felhasználói felületek (UI) építésében, különösen a webalkalmazások esetében. A könyvtár elterjedésével és folyamatos fejlődésével ma már szinte az iparági szabvánnyá vált a modern webalkalmazások fejlesztésében. A React alapelve az, hogy a felhasználói felületet komponens-alapú módon kell felépíteni, ahol minden komponens önálló, újrahasznosítható és kezelhető.
+\cite{react1}
 
 A React egyik legfontosabb előnye a virtuális DOM használata, amely lehetővé teszi az alkalmazás gyors és hatékony frissítését anélkül, hogy a teljes dokumentumot újra renderelni kellene. A React fejlesztése gyors, a kód karbantartása könnyű, és lehetővé teszi a dinamikus, interaktív alkalmazások gyors prototípusát.
 
@@ -254,6 +299,7 @@ A React a modern webalkalmazások egyik legnépszerűbb könyvtára, amely a kom
 
 \section {CRUD Műveletek} 
 A .NET Web API-ban a CRUD (Create, Read, Update, Delete) műveletek azok az alapvető műveletek, amelyeket egy adatbázis-kezelő rendszerben kell implementálni az adatok manipulálására. A .NET Web API-ban minden CRUD művelethez egy HTTP metódust rendelünk:
+\cite{cr1}
 
 \par Create: Az új adat létrehozása (HTTP POST).
 \par Read: Az adat lekérése (HTTP GET).
@@ -263,7 +309,6 @@ Példa CRUD műveletek ASP.NET Core Web API-ban:
 Tegyük fel, hogy van egy Product nevű entitásunk, és létre akarunk hozni egy API-t, amely képes a termékek CRUD műveleteit végrehajtani.
 
 \begin{lstlisting}[language=JavaScript]
-
 public class Product
 {
 	public int Id { get; set; }
@@ -350,8 +395,6 @@ A Swagger konfigurálását a Startup.cs fájlban végezzük el. A ConfigureServ
 
 
 \begin{lstlisting}[language=JavaScript]
-	
-	
 public void ConfigureServices(IServiceCollection services)
 {
 	services.AddControllers();
@@ -395,9 +438,6 @@ GET kérés esetén egyszerűen kattintsunk a "Send" gombra, hogy lekérjük az 
 \hspace*{1cm}
 
 \begin{lstlisting}[language=JavaScript]
-	
-	
-	
 {
 	"name": "New Product",
 	"price": 19.99
@@ -418,15 +458,13 @@ A CRUD műveletek implementálása és tesztelése egy .NET Web API-ban viszonyl
 
 \section {Entity Framework (EF) - Adatbázis kezelés}
 Az Entity Framework egy objektum-relációs leképezési (ORM) eszköz a .NET platform számára, amely lehetővé teszi, hogy az adatbázisokat objektumokként kezeljük. Az EF segítségével nem kell SQL lekérdezéseket manuálisan írni, mert az ORM automatikusan leképezi az adatbázist és az objektumokat egymásra. Az Entity Framework használatával könnyen végezhetünk CRUD műveleteket (Create, Read, Update, Delete) az adatbázisban.
+\cite{en1}
 
 Példa:
 
 Adatmodell: A User entitás például egy táblát reprezentálhat az adatbázisban.
 
 \begin{lstlisting}[language=JavaScript]
-	
-	
-	
 public class User
 {
 	public int Id { get; set; }
@@ -444,6 +482,7 @@ public class ApplicationDbContext : DbContext
 \end{lstlisting}
 \section {Web API - Backend kommunikáció}
 A Web API az a közvetítő réteg, amely lehetővé teszi a frontend és a backend közötti kommunikációt HTTP protokollon keresztül. A Web API-t a .NET Core vagy .NET 6/7/8 környezetben fejleszthetjük, és RESTful szabványokat követhetünk a különböző műveletek (GET, POST, PUT, DELETE) kezelésére.
+\cite{we1}
 
 API Controller példa:
 \begin{lstlisting}[language=JavaScript]
@@ -512,6 +551,22 @@ Axios vagy fetch API: Az Axios könyvtárat használhatjuk, hogy HTTP kéréseke
 Backend: Az Entity Framework és a Web API kombinálásával egy erős adatbázis-kezelési réteget hozhatunk létre, amely lehetővé teszi a dinamikus adatfeldolgozást és kommunikációt az adatbázissal.
 Frontend: A React segítségével dinamikus és interaktív felhasználói felületet építhetünk, amely könnyedén összekapcsolható az API-val, hogy adatokat kérjünk és jelenítsünk meg.
 Ez a kombináció a modern webfejlesztés alapja, és nagyban javítja a fejlesztési folyamatot, miközben biztosítja a skálázhatóságot és az egyszerű karbantartást.
+\chapter{Program}
+
+\section{Adatbázis}
+Ez a SQL szkript három különböző táblát tartalmaz, amelyeket egy eseményrendező rendszerhez terveztünk. A három tábla az alábbiak szerint van kialakítva:
+
+\begin{enumerate}
+	\item felhasznalo: Ez a tábla a felhasználók adatait tartalmazza, beleértve a felhasználó nevét, teljes nevét, email címét, jogosultságait, aktivitási státuszát, valamint a regisztráció időpontját és egyéb kapcsolódó adatokat. A tábla segítségével nyomon követhetjük a felhasználói fiókokat és jogosultságokat, biztosítva a megfelelő hozzáférést a rendszer különböző funkcióihoz.
+	\item esemeny: Az eseménytáblában különböző rendezvények információit tároljuk, beleértve az esemény nevét, helyszínét, dátumát, leírását és a kapcsolódó képet. Ez a tábla lehetővé teszi a különböző események könnyű kezelését és megjelenítését a rendszerben.
+	\item chat messages: Ez a tábla a felhasználók közötti üzenetváltásokat tárolja, amelyben szerepel az üzenet ID-ja, a felhasználó neve, az üzenet szövege és az üzenet küldésének időpontja. A tábla használata lehetővé teszi a chat üzenetek rögzítését és későbbi visszakeresését.
+\end{enumerate}
+
+\noindent A rendszer ezen táblák segítségével hatékonyan képes kezelni a felhasználók közötti kommunikációt, az események szervezését és a felhasználói adatokat. Az adatbázis felépítése biztosítja a rugalmas és átlátható működést, lehetővé téve a könnyű adatkezelést és a jövőbeli bővítéseket.
+
+ 
+
+  
 
 \chapter*{Összegzés}
 \addcontentsline{toc}{chapter}{Összegzés}
@@ -524,7 +579,7 @@ Lórum ipse olyan borzasztóan cogális patás, ami fogás nélkül nem varkál 
 \Huge\begin{center}
 	\textbf{Köszönetnyilvánítás}	
 \end{center}\normalsize
-Szeretnék köszönetet mondani mindazoknak, akik segítették a vizsgaremekem létrejöttét, külön megköszönve 
+Szeretnék köszönetet mondani mindazoknak, akik segítették a vizsgaremekem létrejöttét, külön megköszönve
 \newline\newline
 Lórum ipse olyan borzasztóan cogális patás, ami fogás nélkül nem varkál megfelelően. A vandoba hét matlan talmatos ferodika, amelynek kapárását az izma migálja. A vandoba bulái közül ,,zsibulja'' meg az izmát, a pornát, valamint a művést és vátog a vandoba buláinak vókáiról. Vókája a raktil prozása két emen között. Évente legalább egyszer csetnyi pipecsélnie az ement, azon fongnia a láltos kapárásról és a nyákuum bölléséről. A vandoba ninti és az emen elé redőzi a szamlan radalmakan érvést. Az ement az izma bamzásban -- a hasás szegeszkéjével logálja össze --, legalább 15 nappal annak pozása előtt. Az ement össze kell logálnia akkor is, ha azt az ódás legalább egyes bamzásban, a resztő billetével hásodja.
 
@@ -537,13 +592,28 @@ Lórum ipse olyan borzasztóan cogális patás, ami fogás nélkül nem varkál 
 	\label{fig-melleklet1}
 \end{figure}
 
+\begin{thebibliography}{2}
+\addcontentsline{toc}{chapter}{\bibname}
+\bibitem{relacio1} \textsc{internetes forrás}: \emph{Mi az a relációs adatbázis?}, \url{https://azure.microsoft.com/hu-hu/resources/cloud-computing-dictionary/what-is-a-relational-database},  Letöltve: 2025 március 11.-én
 
+\bibitem{net1} \textsc{internetes forrás}:\emph{Tutorial: Create a controller-based web API with ASP.NET Core}, \url{https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-9.0&tabs=visual-studio},  Letöltve: 2025 március 11.-én
+
+\bibitem{react1} \textsc{internetes forrás}: \emph{React (software)}, \url{https://en.wikipedia.org/wiki/React_%28software%29},  Letöltve: 2025 március 11.-én
+
+\bibitem{cr1} \textsc{internetes forrás}: \emph{Egyszerű, adatvezérelt CRUD-mikroszolgáltatás létrehozása}, \url{https://learn.microsoft.com/hu-hu/dotnet/architecture/microservices/multi-container-microservice-net-applications/data-driven-crud-microservice},  Letöltve: 2025 március 11.-én
+
+\bibitem{en1} \textsc{internetes forrás}: \emph{Adatbázis kezelése Entity Framework segítségével}, \url{https://csharptutorial.hu/docs/hellovilag-hellocsharp/15-adatbazis-kezeles-entity-framework-el/adatbazis-kezelese-entity-framework-segitsegevel/},  Letöltve: 2025 március 11.-én
+
+\bibitem{we1} \textsc{internetes forrás}: \emph{Tutorial: Create a controller-based web API with ASP.NET Core
+},\url{https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-9.0&tabs=visual-studio},Letöltve: 2025 március 11.-én
+
+\end{thebibliography}
 
 % Ide lehet szkennelt dokumentumot, dokumentumokat beszúrni
 %\includepdf{}
 \begin{figure}[bt]
 	\begin{center}
-		\includegraphics[width=1\textwidth]{esemenyrendezo.png}
+		\includegraphics[width=1\textwidth]{es.png}
 	\end{center}
 	\end {figure}
 \end{document}
