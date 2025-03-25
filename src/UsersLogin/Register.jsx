@@ -48,7 +48,7 @@ export const Register = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:5000/api/Regisztracio", requestBody);
+      const response = await axios.post("https://esemenyrendezo1.azurewebsites.net/api/Regisztracio", requestBody);
       alert(response.data);
       navigate("/");
     } catch (error) {

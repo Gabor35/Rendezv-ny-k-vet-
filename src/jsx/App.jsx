@@ -52,7 +52,7 @@ const AppContent = () => {
     if (storedUser) {
       setUser(storedUser);
     }
-    let url = "http://localhost:5000/api/Esemeny/";
+    let url = "https://esemenyrendezo1.azurewebsites.net/api/Esemeny/";
     axios
       .get(url)
       .then((response) => {

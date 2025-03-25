@@ -18,7 +18,7 @@ const ForgotPassword = () => {
     setError("");
 
     try {
-      const response = await axios.post("http://localhost:5000/api/forgot-password", { email });
+      const response = await axios.post("https://esemenyrendezo1.azurewebsites.net/api/forgot-password", { email });
       setMessage(response.data.message);
     } catch (err) {
       setError(err.response?.data?.error || "Hiba történt. Próbáld újra.");

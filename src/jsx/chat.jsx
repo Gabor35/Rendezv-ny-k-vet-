@@ -10,7 +10,7 @@ const Chat = () => {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/ChatMessage");
+        const response = await axios.get("https://esemenyrendezo1.azurewebsites.net/api/ChatMessage");
         setMessages(response.data);
       } catch (error) {
         console.error("Error fetching chat messages:", error);
@@ -29,7 +29,7 @@ const Chat = () => {
       };
 
       try {
-        await axios.post(`http://localhost:5000/api/ChatMessage/${token}`, newMessageObj);
+        await axios.post(`https://esemenyrendezo1.azurewebsites.net/api/ChatMessage/${token}`, newMessageObj);
         setMessages([...messages, newMessageObj]);
         setNewMessage("");
       } catch (error) {

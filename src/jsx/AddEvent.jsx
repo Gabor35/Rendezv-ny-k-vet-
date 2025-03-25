@@ -40,7 +40,7 @@ const AddEvent = ({ onAddEvent }) => {
     const newEventObj = { ...newEvent, EsemenyID: Date.now() };
 
     // Küldjük az új eseményt a backend API-hoz
-    axios.post('http://localhost:5000/api/Esemeny', newEventObj)
+    axios.post('https://esemenyrendezo1.azurewebsites.net/api/Esemeny', newEventObj)
       .then(response => {
         onAddEvent(response.data); // Új esemény hozzáadása a szülő komponenshez
         setNewEvent({

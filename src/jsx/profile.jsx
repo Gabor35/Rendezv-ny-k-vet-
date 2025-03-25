@@ -23,7 +23,7 @@ const ProfileSettings = () => {
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/user/profile"
+          "https://esemenyrendezo1.azurewebsites.net/api/user/profile"
         );
         setProfile(response.data);
       } catch (error) {
@@ -40,7 +40,7 @@ const ProfileSettings = () => {
   const handleSave = async () => {
     setSaving(true);
     try {
-      await axios.put("http://localhost:5000/api/user/profile", profile);
+      await axios.put("https://esemenyrendezo1.azurewebsites.net/api/user/profile", profile);
     } catch (error) {
       console.error("Hiba a mentéskor:", error);
       setError("Nem sikerült menteni a profiladatokat.");
@@ -52,7 +52,7 @@ const ProfileSettings = () => {
   const handleDeleteAccount = async () => {
     if (window.confirm("Biztosan törölni szeretnéd a fiókodat?")) {
       try {
-        await axios.delete("http://localhost:5000/api/user/profile");
+        await axios.delete("https://esemenyrendezo1.azurewebsites.net/api/user/profile");
         alert("Fiók törölve");
       } catch (error) {
         console.error("Hiba a fiók törlésekor:", error);

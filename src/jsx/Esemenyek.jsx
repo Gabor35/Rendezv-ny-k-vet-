@@ -15,7 +15,7 @@ const Esemenyek = () => {
   const token = "YOUR_API_TOKEN";
 
   useEffect(() => {
-    let url = "http://localhost:5000/api/Esemeny/" + token;
+    let url = "https://esemenyrendezo1.azurewebsites.net/api/Esemeny/" + token;
     alert(url);
     axios
       .get(`/api/Esemeny/${token}`)
