@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/Rendezv-ny-k-vet-/static/css/main.b384208f.css",
+    "main.js": "/Rendezv-ny-k-vet-/static/js/main.86a9cb32.js",
+    "static/media/background.jpg": "/Rendezv-ny-k-vet-/static/media/background.2a2d9c14167a1c991533.jpg",
+    "static/media/bootstrap-icons.woff?": "/Rendezv-ny-k-vet-/static/media/bootstrap-icons.39795c0b4513de014cf8.woff",
+    "static/media/bootstrap-icons.woff2?": "/Rendezv-ny-k-vet-/static/media/bootstrap-icons.b7bcc075b395c14ce8c2.woff2",
+    "static/media/logo.jpg": "/Rendezv-ny-k-vet-/static/media/logo.de713f0dcbbaedd5a6e5.jpg",
+    "static/media/gear-fill.svg": "/Rendezv-ny-k-vet-/static/media/gear-fill.a2846c26d54b2241ab5b5b0c22b1c685.svg",
+    "index.html": "/Rendezv-ny-k-vet-/index.html",
+    "static/media/grid.svg": "/Rendezv-ny-k-vet-/static/media/grid.19ababdd77c0ccb1c6407e0d5d00b2de.svg",
+    "static/media/card-list.svg": "/Rendezv-ny-k-vet-/static/media/card-list.ce37b0a6a9591bf1e49c794ace2a2e34.svg",
+    "static/media/heart.svg": "/Rendezv-ny-k-vet-/static/media/heart.a9c56bf0da45718399f391a40a69dacd.svg",
+    "static/media/heart-fill.svg": "/Rendezv-ny-k-vet-/static/media/heart-fill.3c7c924f38fbedff7fd988bea876a911.svg",
+    "main.b384208f.css.map": "/Rendezv-ny-k-vet-/static/css/main.b384208f.css.map",
+    "main.86a9cb32.js.map": "/Rendezv-ny-k-vet-/static/js/main.86a9cb32.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b384208f.css",
+    "static/js/main.86a9cb32.js"
+  ]
+}
