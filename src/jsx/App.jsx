@@ -22,7 +22,15 @@ import gear from "../pictures/gear-fill.svg";
 import gridIcon from "../pictures/grid.svg";
 import listIcon from "../pictures/card-list.svg";
 
+
 //https://www.booking.com/searchresults.hu.html?label=msn-tUXtx_K*PI_SVt3q3YLZDg-79989658705990%3Atikwd-79989834340534%3Aloc-88%3Aneo%3Amte%3Alp141771%3Adec%3Aqshotel+oldalak&utm_source=bing&utm_medium=cpc&utm_term=tUXtx_K*PI_SVt3q3YLZDg&utm_content=Booking+-+Desktop&utm_campaign=Hungarian_Hungary+HU+HU&aid=2369666&dest_id=-553173&dest_type=city&group_adults=2&req_adults=2&no_rooms=1&group_children=0&req_children=0
+
+const setupAxiosDefaults = () => {
+  const userData = JSON.parse(localStorage.getItem('felhasz'));
+  if (userData?.token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${userData.token}`;
+  }
+};
 
 const AppContent = () => {
   const [events, setEvents] = useState([]);
@@ -53,6 +61,7 @@ const AppContent = () => {
       .catch((error) => {
         console.error("Error fetching events:", error);
       });
+      setupAxiosDefaults();
   }, []);
 
   const handleAddEvent = (newEvent) => {

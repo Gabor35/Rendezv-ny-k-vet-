@@ -1,3 +1,4 @@
+// src/Context/GlobalContext.jsx
 import { createContext, useContext, useState} from "react";
 
 const GlobalContext = createContext();
@@ -9,6 +10,7 @@ export const GlobalProvider = ({ children }) => {
     permission: 0,
     profilePicturePath: "",
     token: "",
+    refreshToken: "", // Add refresh token to state
   });
   const [loggedIn, setLoggedIn] = useState(false);
   const [loggedUserName, setLoggedUserName] = useState("");

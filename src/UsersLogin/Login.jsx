@@ -9,13 +9,26 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./login.css";
 
 export const Login = () => {
+  // State management
   const [loginName, setLoginName] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
   const [avatar, setAvatar] = useState("");
-  const { apiUrl, ftpUrl, loggedUser, setLoggedUser, loggedIn, setLoggedIn, setLoggedUserName } = useGlobalContext();
+  
+  // Global context values
+  const { 
+    apiUrl, 
+    ftpUrl, 
+    loggedUser, 
+    setLoggedUser, 
+    loggedIn, 
+    setLoggedIn, 
+    setLoggedUserName 
+  } = useGlobalContext();
+  
   const navigate = useNavigate();
 
+  // Check for logged-in user on component mount
   useEffect(() => {
     if (loggedIn) {
       alert(`${loggedUser.name} sikeresen bejelentkezett!`);
@@ -28,6 +41,7 @@ export const Login = () => {
     }
   }, [navigate, loggedIn]);
 
+  // Handle user logout
   const handleLogout = async () => {
     if (user?.token) {
       try {
@@ -44,10 +58,16 @@ export const Login = () => {
     navigate("/login");
   };
 
+  // Handle user login
   const handleLogin = async () => {
     try {
+      // Get salt for the user
       const { data: salt } = await axios.post(`${apiUrl}Login/GetSalt/${loginName}`);
+      
+      // Create hash with password and salt
       const tmpHash = sha256(password + salt.toString());
+      
+      // Attempt login
       const loginResponse = await axios.post(`${apiUrl}Login`, { loginName, tmpHash });
 
       if (loginResponse.status === 200) {
@@ -68,6 +88,7 @@ export const Login = () => {
     }
   };
 
+  // Render component
   return (
     <Container className="d-flex justify-content-center align-items-center vh-100">
       <motion.div
@@ -78,14 +99,28 @@ export const Login = () => {
       >
         <Card className="glass-card p-4">
           {user ? (
+            // Logged in user view
             <Card.Body className="text-center">
               <h2 className="title">Üdv, {user.name}!</h2>
-              {avatar && <Image src={avatar} roundedCircle width="120" height="120" className="profile-avatar" />}
-              <Button variant="danger" onClick={handleLogout} className="w-100 logout-btn">
+              {avatar && (
+                <Image 
+                  src={avatar} 
+                  roundedCircle 
+                  width="120" 
+                  height="120" 
+                  className="profile-avatar" 
+                />
+              )}
+              <Button 
+                variant="danger" 
+                onClick={handleLogout} 
+                className="w-100 logout-btn"
+              >
                 Kijelentkezés
               </Button>
             </Card.Body>
           ) : (
+            // Login form view
             <Card.Body>
               <h2 className="text-center title text-info">Bejelentkezés</h2>
               <Form>
@@ -107,7 +142,11 @@ export const Login = () => {
                     className="input-field"
                   />
                 </Form.Group>
-                <Button variant="primary" className="w-100 login-btn" onClick={handleLogin}>
+                <Button 
+                  variant="primary" 
+                  className="w-100 login-btn" 
+                  onClick={handleLogin}
+                >
                   Bejelentkezés
                 </Button>
                 <Button
