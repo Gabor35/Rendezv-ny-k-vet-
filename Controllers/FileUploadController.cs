@@ -24,7 +24,7 @@ namespace esemenyrendezo.Controllers
                 var httpRequest = Request.Form;
                 var postedFile = httpRequest.Files[0];
                 string fileName = postedFile.FileName;
-                string subFolder = "/Files/";
+                string subFolder = "/Images/";
                 var filePath = _env.ContentRootPath + subFolder + fileName;
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
@@ -53,7 +53,7 @@ namespace esemenyrendezo.Controllers
 
                 var url = "ftp://ftp.nethely.hu" + subFolder + "/" + fileName;
                 FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
-                request.Credentials = new NetworkCredential("rendezvenykoveto", "Dani1234!");
+                request.Credentials = new NetworkCredential("rendezvenykoveto", "rendezveny");
                 request.Method = WebRequestMethods.Ftp.UploadFile;
                 await using (Stream ftpStream = request.GetRequestStream())
                 {

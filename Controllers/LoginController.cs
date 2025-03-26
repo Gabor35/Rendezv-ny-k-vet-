@@ -13,19 +13,19 @@ namespace esemenyrendezo.Controllers
         [HttpPost("GetSalt/{felhasznaloNev}")]
         public async Task<IActionResult> GetSalt(string felhasznaloNev)
         {
-            /*string password = "a";
-            string SALT=Program.GenerateSalt();
-            string tHASH=Program.CreateSHA256(password+SALT);
-            string HASH=Program.CreateSHA256(tHASH);*/
             using (var cx = new EsemenyrendezoContext())
             {
                 try
                 {
-                    Felhasznalo response = await cx.Felhasznalos.FirstOrDefaultAsync(f => f.FelhasznaloNev == felhasznaloNev);
-                    return response == null ? BadRequest("Hiba") : Ok(response.Salt);
+                    Felhasznalo response = await cx.Felhasznalos
+                        .FirstOrDefaultAsync(f => f.FelhasznaloNev == felhasznaloNev);
+
+                    if (response == null)
+                        return BadRequest("Felhasználó nem található");
+
+                    return Ok(response.Salt);
                 }
-                catch
-                (Exception ex)
+                catch (Exception ex)
                 {
                     return BadRequest(ex.Message);
                 }
@@ -33,7 +33,6 @@ namespace esemenyrendezo.Controllers
         }
 
         [HttpPost]
-
         public async Task<IActionResult> Login(LoginDTO loginDTO)
         {
             using (var cx = new EsemenyrendezoContext())
@@ -41,7 +40,9 @@ namespace esemenyrendezo.Controllers
                 try
                 {
                     string Hash = Program.CreateSHA256(loginDTO.TmpHash);
-                    Felhasznalo loggedUser = await cx.Felhasznalos.FirstOrDefaultAsync(f => f.FelhasznaloNev == loginDTO.LoginName && f.Hash == Hash);
+                    Felhasznalo loggedUser = await cx.Felhasznalos
+                        .FirstOrDefaultAsync(f => f.FelhasznaloNev == loginDTO.LoginName && f.Hash == Hash);
+
                     if (loggedUser != null && loggedUser.Aktiv == 1)
                     {
                         string token = Guid.NewGuid().ToString();
@@ -49,19 +50,30 @@ namespace esemenyrendezo.Controllers
                         {
                             Program.LoggedInUsers.Add(token, loggedUser);
                         }
-                        return Ok(new LoggedUser { Name = loggedUser.TeljesNev, Email = loggedUser.Email, Permission = loggedUser.Jogosultsag, ProfilePicturePath = loggedUser.FenykepUtvonal, Token = token });
+
+                        return Ok(new LoggedUser
+                        {
+                            Name = loggedUser.TeljesNev,
+                            Email = loggedUser.Email,
+                            Permission = loggedUser.Jogosultsag,
+                            ProfilePicturePath = loggedUser.FenykepUtvonal,
+                            Token = token
+                        });
                     }
-                    else
-                    {
-                        return BadRequest("Hibás név vagy jelszó/inaktív felhasználó!");
-                    }
+
+                    return BadRequest("Hibás név vagy jelszó/inaktív felhasználó!");
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest(new LoggedUser { Permission = -1, Name = ex.Message, ProfilePicturePath = "", Email = "" });
+                    return BadRequest(new LoggedUser
+                    {
+                        Permission = -1,
+                        Name = ex.Message,
+                        ProfilePicturePath = "",
+                        Email = ""
+                    });
                 }
             }
         }
     }
 }
-

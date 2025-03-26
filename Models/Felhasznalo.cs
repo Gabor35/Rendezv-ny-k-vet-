@@ -26,4 +26,7 @@ public partial class Felhasznalo
     public string FenykepUtvonal { get; set; } = null!;
 
     public virtual ICollection<Reszvetel> Reszvetels { get; set; } = new List<Reszvetel>();
+
+    public string? RefreshToken { get; set; }
+    public DateTime? RefreshTokenExpiryTime { get; set; }
 }
