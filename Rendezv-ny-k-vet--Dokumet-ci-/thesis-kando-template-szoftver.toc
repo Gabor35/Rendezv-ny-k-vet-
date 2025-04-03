@@ -10,5 +10,7 @@
 \select@language {magyar} \contentsline {section}{\numberline {1.8}Integráció - React és Web API}{17}{section.1.8}%
 \select@language {magyar} \contentsline {chapter}{\numberline {2}Program}{18}{chapter.2}%
 \select@language {magyar} \contentsline {section}{\numberline {2.1}Adatbázis}{18}{section.2.1}%
+\select@language {magyar} \contentsline {section}{\numberline {2.2}Backend}{18}{section.2.2}%
+\select@language {magyar} \contentsline {section}{\numberline {2.3}Frontend}{18}{section.2.3}%
 \select@language {magyar} \contentsline {chapter}{Összegzés}{19}{chapter*.3}%
 \select@language {magyar} \contentsline {chapter}{Irodalomjegyz\'ek}{21}{chapter*.4}%
