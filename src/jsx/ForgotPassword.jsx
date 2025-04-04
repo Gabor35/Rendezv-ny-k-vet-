@@ -79,7 +79,7 @@ const ForgotPassword = () => {
             <Button
               variant="link"
               className="w-100 mt-2 forgot-password-btn"
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/login")}
             >
               Vissza a bejelentkezéshez
             </Button>

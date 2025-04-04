@@ -238,7 +238,7 @@ const AppContent = () => {
                 <>
                   <li className="nav-item">
                     <NavLink
-                      to="/"
+                      to="/login"
                       className={({ isActive }) =>
                         "nav-link" + (isActive ? " active" : "")
                       }
@@ -290,7 +290,7 @@ const AppContent = () => {
                         onClick={() => {
                           localStorage.removeItem("felhasz");
                           setUser(null);
-                          window.location.href = "/";
+                          window.location.href = "/login";
                         }}
                         className="btn btn-danger w-100"
                       >
@@ -394,6 +394,7 @@ const AppContent = () => {
             element={<EventList events={filteredEvents} isGridView={isGridView} />}
           />
           <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/events" element={<Esemenyek />} />
