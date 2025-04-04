@@ -13,7 +13,7 @@ export const Saved = () => {
   const [error, setError] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const { apiUrl, ftpUrl } = useGlobalContext();
+  const { apiUrl} = useGlobalContext();
 
   const userData = JSON.parse(localStorage.getItem('felhasz'));
   const token = userData ? userData.token : null;
@@ -86,7 +86,7 @@ export const Saved = () => {
           >
             <div className="card mb-3">
               <img
-                src={`${ftpUrl}${event.kepurl}`}
+                src={`https://images-0prm.onrender.com/${event.kepurl}`}
                 className="card-img-top"
                 alt={event.cime}
                 style={{ height: '200px', objectFit: 'cover' }}
@@ -128,7 +128,7 @@ export const Saved = () => {
         </Modal.Header>
         <Modal.Body>
           <img
-            src={`${ftpUrl}${selectedEvent?.kepurl}`}
+            src={`https://images-0prm.onrender.com/${selectedEvent?.kepurl}`}
             alt={selectedEvent?.cime}
             className="img-fluid mb-3"
             style={{ width: '100%', objectFit: 'cover' }}

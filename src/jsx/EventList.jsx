@@ -11,29 +11,35 @@ export const EventList = ({ events, isGridView }) => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [filledHearts, setFilledHearts] = useState({});
-  const [initialLoadDone, setInitialLoadDone] = useState(false);
-  const { apiUrl, ftpUrl } = useGlobalContext();
+  const { apiUrl } = useGlobalContext();
 
   const userData = JSON.parse(localStorage.getItem('felhasz'));
   const token = userData ? userData.token : null;
 
   useEffect(() => {
     const checkSavedEvents = async () => {
-      if (!token || !events.length || initialLoadDone) return;
+      if (!token || !events.length) return;
+
       try {
         const savedHearts = {};
         for (const event of events) {
+          // Skip events without a valid ID
+          if (!event.id || typeof event.id !== 'number') {
+            console.warn(`Skipping event with invalid ID: ${event.id}`);
+            continue;
+          }
+
           const response = await axios.get(`${apiUrl}Reszvetel/check/${token}/${event.id}`);
           savedHearts[event.id] = response.data;
         }
         setFilledHearts(savedHearts);
-        setInitialLoadDone(true);
       } catch (error) {
         console.error('Error checking saved events:', error);
       }
     };
+
     checkSavedEvents();
-  }, [events, initialLoadDone, token, apiUrl]);
+  }, [events, token, apiUrl]);
 
   const handleHeartClick = async (eventId, e) => {
     e.preventDefault();
@@ -70,9 +76,9 @@ export const EventList = ({ events, isGridView }) => {
           className={isGridView ? "row" : "list-group"}
         >
           {events.map((event, index) => (
-            <motion.div 
+            <motion.div
               className={isGridView ? "col-md-4" : "list-group-item d-flex align-items-center mb-3 p-3 border rounded shadow-sm"}
-              key={event.id}
+              key={event.id || `event-${index}`}
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -50 }}
@@ -80,10 +86,10 @@ export const EventList = ({ events, isGridView }) => {
             >
               <div className="card mb-3" style={isGridView ? {} : { display: 'flex', flexDirection: 'row', width: '100%' }}>
                 <img
-                  src={`${ftpUrl}${event.kepurl}`}
+                  src={`https://images-0prm.onrender.com/${event.kepurl}`}
                   className={isGridView ? "card-img-top" : "img-thumbnail"}
                   alt={event.cime}
-                  style={isGridView ? { height: '200px', objectFit: 'cover' } : { maxWidth: '200px', maxHeight: '200px', objectFit: 'cover', marginRight: '15px'}}
+                  style={isGridView ? { height: '200px', objectFit: 'cover' } : { maxWidth: '200px', maxHeight: '200px', objectFit: 'cover', marginRight: '15px' }}
                 />
                 <div className="card-body" style={isGridView ? {} : { flex: 1 }}>
                   <h5 className="card-title">{event.cime}</h5>
@@ -97,14 +103,14 @@ export const EventList = ({ events, isGridView }) => {
                   >
                     Részletek
                   </motion.button>
-                  <button 
+                  <button
                     style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '5px', marginLeft: '10px' }}
                     onClick={(e) => handleHeartClick(event.id, e)}
                   >
-                    <motion.img 
-                      src={filledHearts[event.id] ? heartFillIcon : heartIcon} 
-                      alt="Heart" 
-                      style={{ width: '20px', verticalAlign: 'middle' }} 
+                    <motion.img
+                      src={filledHearts[event.id] ? heartFillIcon : heartIcon}
+                      alt="Heart"
+                      style={{ width: '20px', verticalAlign: 'middle' }}
                       whileHover={{ scale: 1.2 }}
                     />
                   </button>
@@ -123,7 +129,7 @@ export const EventList = ({ events, isGridView }) => {
           {selectedEvent && (
             <>
               <img
-                src={`${ftpUrl}${selectedEvent.kepurl}`}
+                src={`https://images-0prm.onrender.com/${selectedEvent.kepurl}`}
                 alt={selectedEvent.cime}
                 className="img-fluid mb-3"
                 style={{ width: '100%', objectFit: 'cover' }}

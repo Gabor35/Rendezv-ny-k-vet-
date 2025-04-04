@@ -104,9 +104,8 @@ const ProfileSettings = () => {
         {[
           { label: "Név", name: "name" },
           { label: "Telefonszám", name: "phone" },
-          { label: "Ország", name: "country" },
           { label: "Profilkép", name: "profilePicture" },
-          { label: "Új Jelszó", name: "password" },
+          { label: "Jelszó", name: "password" },
           { label: "Technikai probléma jelentése", name: "technikaiproblema" },
         ].map(({ label, name }) => (
           <motion.div key={name} className="mb-3">

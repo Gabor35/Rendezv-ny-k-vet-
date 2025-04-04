@@ -7,9 +7,10 @@ const AddEvent = ({ onAddEvent }) => {
     Helyszin: '',
     Datum: '',
     Leiras: '',
-    Kepurl: ''  // Kép URL-t is tárolunk
+    Kepurl: '' // Stores the uploaded image URL
   });
-  const [error, setError] = useState('');  // Hibák tárolása
+  const [error, setError] = useState(''); // Stores error messages
+  const [isUploading, setIsUploading] = useState(false); // Tracks image upload status
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -19,38 +20,93 @@ const AddEvent = ({ onAddEvent }) => {
     });
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);  // Kép URL létrehozása
-      setNewEvent({
-        ...newEvent,
-        Kepurl: imageUrl  // Kép URL tárolása az állapotban
-      });
+    if (!file) {
+      setError('Kérjük, válasszon egy fájlt a feltöltéshez.');
+      return;
+    }
+
+    setIsUploading(true);
+
+    try {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = async () => {
+        const base64File = reader.result.split(',')[1]; // Extract Base64 content
+        const fileName = `${Date.now()}.png`; // Use current datetime in milliseconds as the file name
+        const githubApiUrl = `https://api.github.com/repos/Gabor35/Images/contents/kepek/${fileName}`;
+        const personalAccessToken = process.env.REACT_APP_GITHUB_TOKEN; // Use environment variable
+
+        const response = await axios.put(
+          githubApiUrl,
+          {
+            message: `Add image ${fileName}`,
+            content: base64File
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${personalAccessToken}`,
+              'Content-Type': 'application/json'
+            }
+          }
+        );
+
+        const fileUrl = response.data.content.html_url; // GitHub returns the URL of the uploaded file
+        setNewEvent({
+          ...newEvent,
+          Kepurl: fileUrl
+        });
+        setIsUploading(false);
+      };
+    } catch (uploadError) {
+      console.error('Error uploading image:', uploadError);
+      setError('Hiba történt a kép feltöltése során. Ellenőrizze a fájl méretét és típusát.');
+      setIsUploading(false);
     }
   };
 
   const handleAddEvent = () => {
-    // Validálás, hogy a kötelező mezők ki vannak-e töltve, és a kép is ki van-e választva
     if (!newEvent.Cime || !newEvent.Helyszin || !newEvent.Datum) {
-      setError('Minden mezőt ki kell tölteni, kivéve az esemény leírását!');  // Hibás mezők üzenete
+      setError('Minden mezőt ki kell tölteni, kivéve az esemény leírását!');
       return;
     }
 
-    const newEventObj = { ...newEvent, EsemenyID: Date.now() };
+    if (!newEvent.Kepurl) {
+      setError('Kérjük, töltsön fel egy képet az eseményhez.');
+      return;
+    }
 
-    // Küldjük az új eseményt a backend API-hoz
-    axios.post('https://esemenyrendezo1.azurewebsites.net/api/Esemeny', newEventObj)
+    const newEventObj = { ...newEvent }; // Do not generate an ID here
+
+    const token = localStorage.getItem('authToken');
+
+    axios.post('https://esemenyrendezo1.azurewebsites.net/api/ImageUpload/addEvent', newEventObj, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
       .then(response => {
-        onAddEvent(response.data); // Új esemény hozzáadása a szülő komponenshez
+        const createdEvent = response.data;
+
+        // Log the backend response for debugging
+        console.log('Backend response:', createdEvent);
+
+        // Ensure the backend returns a valid ID
+        if (!createdEvent.id) {
+          console.warn('Backend did not return an ID for the created event. Generating a fallback ID.');
+          createdEvent.id = Date.now(); // Fallback to a frontend-generated ID
+        }
+
+        onAddEvent(createdEvent); // Call the parent component's callback
         setNewEvent({
           Cime: '',
           Helyszin: '',
           Datum: '',
           Leiras: '',
-          Kepurl: ''  // Kép URL törlése, ha az eseményt hozzáadták
+          Kepurl: '' // Clear the image URL after adding the event
         });
-        setError('');  // Hiba törlése
+        setError(''); // Clear any errors
       })
       .catch(error => {
         console.error('Error adding event:', error);
@@ -61,7 +117,6 @@ const AddEvent = ({ onAddEvent }) => {
   return (
     <div>
       <form>
-        {/* Esemény cím */}
         <div className="mb-3">
           <input
             type="text"
@@ -72,8 +127,6 @@ const AddEvent = ({ onAddEvent }) => {
             placeholder="Esemény címe"
           />
         </div>
-
-        {/* Helyszín */}
         <div className="mb-3">
           <input
             type="text"
@@ -84,8 +137,6 @@ const AddEvent = ({ onAddEvent }) => {
             placeholder="Helyszín"
           />
         </div>
-
-        {/* Dátum */}
         <div className="mb-3">
           <input
             type="datetime-local"
@@ -95,8 +146,6 @@ const AddEvent = ({ onAddEvent }) => {
             className="form-control"
           />
         </div>
-
-        {/* Leírás */}
         <div className="mb-3">
           <textarea
             name="Leiras"
@@ -106,8 +155,6 @@ const AddEvent = ({ onAddEvent }) => {
             placeholder="Esemény leírása"
           />
         </div>
-
-        {/* Kép feltöltése */}
         <div className="mb-3">
           <label htmlFor="imageUpload" className="form-label">Válassz képet</label>
           <input
@@ -116,16 +163,14 @@ const AddEvent = ({ onAddEvent }) => {
             className="form-control"
             onChange={handleImageChange}
           />
+          {isUploading && <div className="mt-2 text-info">Kép feltöltése...</div>}
           {newEvent.Kepurl && (
             <div className="mt-3">
               <img src={newEvent.Kepurl} alt="Esemény kép" style={{ maxWidth: '200px' }} />
             </div>
           )}
         </div>
-
-        {/* Hibás mezők üzenete */}
         {error && <div className="alert alert-danger">{error}</div>}
-
         <button type="button" className="btn btn-secondary" onClick={handleAddEvent}>Hozzáadás</button>
       </form>
     </div>

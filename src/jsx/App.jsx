@@ -219,7 +219,7 @@ const AppContent = () => {
                         </li>
                         <li>
                           <NavLink to="/calendar" className="dropdown-item">
-                            Kalendárium
+                            Naptár
                           </NavLink>
                         </li>
                         <li>
@@ -259,8 +259,7 @@ const AppContent = () => {
                 </>
               ) : (
                 <li className="nav-item position-relative d-flex align-items-center"
-                  onmouseEnter={() => setShowLogout(true)}
-                  onMouseLeave={() => setShowLogout(false)}>
+>
                   <motion.img
                     src={gear}
                     alt="Beállítások"
