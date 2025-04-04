@@ -55,7 +55,7 @@ export const Login = () => {
     setUser(null);
     setAvatar("");
     alert("Sikeres kijelentkezés!");
-    navigate("/login");
+    navigate("/");
   };
 
   // Handle user login
